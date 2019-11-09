@@ -9,9 +9,10 @@ public:
 
 private:
 
-  std::vector<glm::vec3>   points;
-  std::vector<glm::vec3>  normals;
-  std::vector<glm::vec4>   colors;
+  std::vector<glm::vec3>    points;
+  std::vector<glm::vec3>   normals;
+  std::vector<glm::vec4>    colors;
+  std::vector<glm::vec3> texcoords;
 
   sliceobj s;
 
@@ -23,6 +24,7 @@ void Scene::init()
   points.clear();
   normals.clear();
   colors.clear();
+  texcoords.clear();
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_LINE_SMOOTH);
@@ -36,7 +38,11 @@ void Scene::init()
   glClearColor(0.8f, 0.6f, 0.068f, 1.0f);
 
   //instantiate the objects
-  s.init(points, normals, colors);
+  s.init(points, normals, colors, texcoords);
+
+
+
+  //then take the arrays and send them to the GPU
 
 }
 
