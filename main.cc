@@ -12,21 +12,53 @@ MessageCallback( GLenum source,
                  const GLchar* message,
                  const void* userParam )
 {
-  fprintf( stderr, "    GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+
+
+
+  bool show_high_severity         = true;
+  bool show_medium_severity       = true;
+  bool show_low_severity          = false;
+  bool show_notification_severity = false;
+
+
+
+
+  if(severity == GL_DEBUG_SEVERITY_HIGH && show_high_severity)
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+
+  if(severity == GL_DEBUG_SEVERITY_MEDIUM && show_medium_severity)
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+
+  if(severity == GL_DEBUG_SEVERITY_LOW && show_low_severity)
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+
+  if(severity == GL_DEBUG_SEVERITY_NOTIFICATION && show_notification_severity)
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
             type, severity, message );
 }
 
 //----------------------------------------------------------------------------
+//the geometry
+Scene s;
 
-void init()
-{
-
-  //GENERATE GEOMETRY
-
+//other globals (glow_balls)
 
 
-}
+//----------------------------------------------------------------------------
+
+// void init()
+// {
+//
+//
+//
+// }
 
 //----------------------------------------------------------------------------
 
@@ -34,7 +66,8 @@ void display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // display functions go here
+  // display functions
+  s.draw();
 
   // glFlush();
   glutSwapBuffers();
@@ -122,6 +155,8 @@ void idle( void )
 //----------------------------------------------------------------------------
 
 
+
+
 int main(int argc, char **argv)
 {
 
@@ -148,12 +183,11 @@ int main(int argc, char **argv)
 
   cout << endl << endl << " GL_DEBUG_OUTPUT ENABLED " << endl;
 
-  Scene s;
 
   s.init();
 
 
-  init();
+  // init();
 
   glutDisplayFunc(display);
   glutKeyboardFunc(keyboard);

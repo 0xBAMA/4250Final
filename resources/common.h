@@ -1,20 +1,21 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <random>
 #include <vector>
 #include <iostream>
 using std::cout;
 using std::endl;
 
-#include <random>
-
-
-
 #define POINT_SPRITE_PATH "resources/textures/height/sphere_small.png"
 
-#define WATER_HEIGHT_TEXTURE "resources/textures/height/water_height.png"
-#define WATER_NORMAL_TEXTURE "resources/textures/normal/water_normal.png"
+#define WATER_HEIGHT_TEXTURE "resources/textures/height/wave_height.png"
+#define WATER_NORMAL_TEXTURE "resources/textures/normal/wave_norm.png"
 #define WATER_COLOR_TEXTURE "resources/textures/water_color.png"
+
+#define ROCK_NORMAL_TEXTURE "resources/textures/normals/rock_norm.png"
+#define ROCK_HEIGHT_TEXTURE "resources/textures/height/rock_height.png"
+
 
 //************************************************
 
@@ -22,12 +23,9 @@ using std::endl;
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-
 // GLUT
 #include <GL/freeglut.h>
 #include <GL/freeglut_ext.h>
-
-
 
 // Shader Compilation
 #include "shaders/Shader.h"
@@ -36,7 +34,6 @@ using std::endl;
 
 #include "../resources/LodePNG/lodepng.h"
 // Good, simple png library
-
 
 #include "../resources/perlin.h"
 //perlin noise generation
@@ -53,12 +50,9 @@ using std::endl;
 #include "glm/gtc/type_ptr.hpp" //to send matricies gpu-side
 #include "glm/gtx/transform.hpp"
 
-
-
-
+//**********************************************
 
 namespace JonDefault{
-
 
     glm::mat4 view = glm::lookAt(
         glm::vec3(-1.3f, 0.7f, -1.7f),
@@ -67,7 +61,6 @@ namespace JonDefault{
     );
 
     glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1366.0f / 768.0f, 0.25f, 6.0f);
-
 
     // typedef enum state_t
     // {//control of the player's position
@@ -80,9 +73,7 @@ namespace JonDefault{
     //   twotoone=7
     // } state;
 
-
     float twopi = 2*3.1415926535;
-
 
 }
 
@@ -131,6 +122,7 @@ bool planetest(glm::vec3 plane_point, glm::vec3 plane_norm, glm::vec3 test_point
   return (result < 0) ? true:false;
 }
 
+//**********************************************
 
 //function: capsule sdf
 float capsdf(glm::vec3 p, glm::vec3 a, glm::vec3 b, float r)
