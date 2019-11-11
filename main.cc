@@ -13,52 +13,38 @@ MessageCallback( GLenum source,
                  const void* userParam )
 {
 
-
-
   bool show_high_severity         = true;
   bool show_medium_severity       = true;
-  bool show_low_severity          = false;
+  bool show_low_severity          = true;
   bool show_notification_severity = false;
 
-
-
-
   if(severity == GL_DEBUG_SEVERITY_HIGH && show_high_severity)
-    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = GL_DEBUG_SEVERITY_HIGH, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+            type, message );
 
   if(severity == GL_DEBUG_SEVERITY_MEDIUM && show_medium_severity)
-    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = GL_DEBUG_SEVERITY_MEDIUM, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+            type, message );
 
   if(severity == GL_DEBUG_SEVERITY_LOW && show_low_severity)
-    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = GL_DEBUG_SEVERITY_LOW, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+            type, message );
 
   if(severity == GL_DEBUG_SEVERITY_NOTIFICATION && show_notification_severity)
-    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+    fprintf( stderr, "        GL CALLBACK: %s type = 0x%x, severity = GL_DEBUG_SEVERITY_NOTIFICATION, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+            type, message );
 }
 
 //----------------------------------------------------------------------------
 //the geometry
-Scene s;
+Scene scene;
 
 //other globals (glow_balls)
 
-
-//----------------------------------------------------------------------------
-
-// void init()
-// {
-//
-//
-//
-// }
 
 //----------------------------------------------------------------------------
 
@@ -67,7 +53,7 @@ void display()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // display functions
-  s.draw();
+  scene.draw();
 
   // glFlush();
   glutSwapBuffers();
@@ -114,7 +100,6 @@ void mouse( int button, int state, int x, int y )
 
         //draw with selection colors
 
-
       //selection handling code - using input x and y
       y = glutGet( GLUT_WINDOW_HEIGHT ) - y;
 
@@ -122,7 +107,6 @@ void mouse( int button, int state, int x, int y )
       glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
 
       cout << "color at click is r:" << (int)pixel[0] << " g:" << (int)pixel[1] << " b:" << (int)pixel[2] << endl;
-
 
       //clear the screen
       // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -137,13 +121,11 @@ void mouse( int button, int state, int x, int y )
 
 void timer(int)
 {
-
 	glutPostRedisplay();
 	glutTimerFunc(1000.0/60.0, timer, 0);
 }
 
 //----------------------------------------------------------------------------
-
 
 
 void idle( void )
@@ -154,15 +136,8 @@ void idle( void )
 
 //----------------------------------------------------------------------------
 
-
-
-
 int main(int argc, char **argv)
 {
-
-
-
-
 
   glutInit(&argc, argv);
   // glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);  //doesn't look as good
@@ -172,10 +147,9 @@ int main(int argc, char **argv)
 	glutInitContextProfile( GLUT_CORE_PROFILE );
 
   glutInitWindowSize(720,480);
-  glutCreateWindow("<<<WELCOME>>>");
+  glutCreateWindow("Window");
 
   glewInit();
-
 
   //DEBUG
   glEnable              ( GL_DEBUG_OUTPUT );
@@ -184,22 +158,17 @@ int main(int argc, char **argv)
   cout << endl << endl << " GL_DEBUG_OUTPUT ENABLED " << endl;
 
 
-  s.init();
-
-
-  // init();
-
   glutDisplayFunc(display);
   glutKeyboardFunc(keyboard);
   glutMouseFunc( mouse );
   glutIdleFunc( idle );
   glutTimerFunc(1000.0/60.0, timer, 0);
 
-
-
-
-
+  scene.init();
+  
 //ENTER MAIN LOOP
   glutMainLoop();
+
   return(EXIT_SUCCESS);
+
 }

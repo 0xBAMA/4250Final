@@ -5,7 +5,6 @@
 
 // /home/jb/Documents/4250/4250Final/resources/textures/models/save.png
 
-
 //----------------------------------------------------------------------------
 
 class Scene
@@ -59,20 +58,14 @@ void Scene::init()
   // giving an invalid enum warning, I guess it's just core spec now
   // glEnable(GL_TEXTURE_3D);
 
-
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
   glClearColor(0.8f, 0.5f, 0.068f, 1.0f);
   glPointSize(6.0f);
 
-
-
   //instantiate the objects, populate all arrays
   s.init(points, normals, colors, texcoords);
-
-
 
   //then take the populated arrays and send them to the GPU, set up textures, etc
   gpu_setup();
@@ -90,17 +83,11 @@ void Scene::draw()
 
 void Scene::gpu_setup()
 {
+
   glGenTextures(1, &texture); // Generate an ID
   glBindTexture(GL_TEXTURE_3D, texture); // use the specified ID
 
-  //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones
-  glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
 
-  // This one looks the best - other options are GL_LINEAR, GL_NEAREST
-  glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
   unsigned width, height;
   std::vector<unsigned char> image_data;
@@ -112,6 +99,20 @@ void Scene::gpu_setup()
     cout << endl << "texture loaded" << endl;
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
     glGenerateMipmap(GL_TEXTURE_3D);
+
+    //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+
+    // This one looks the best - other options are GL_LINEAR, GL_NEAREST, then the mipmap ones
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
   }
   else
   {
@@ -139,8 +140,6 @@ void Scene::gpu_setup()
   glBufferSubData(GL_ARRAY_BUFFER, num_bytes_points + num_bytes_texcoords, num_bytes_normals, &normals[0]);
   glBufferSubData(GL_ARRAY_BUFFER, num_bytes_points + num_bytes_texcoords + num_bytes_normals, num_bytes_colors, &colors[0]);
 
-
-
   //COMPILE AND USE SHADERS
 
   Shader s("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl");
@@ -148,33 +147,27 @@ void Scene::gpu_setup()
 
   glUseProgram(shader);
 
-
-
-
   //SET UP VERTEX ARRAYS
 
-
-  cout << "setting up points attrib" << endl << std::flush;
+  cout << endl << endl << "setting up points attrib" << endl << std::flush;
   points_attrib     = glGetAttribLocation(shader, "vPosition");
   glEnableVertexAttribArray(points_attrib);
-  glVertexAttribPointer(points_attrib, 3, GL_FLOAT, GL_FALSE, 0, (static_cast<const char*>(0) + (0)));
+  glVertexAttribPointer(points_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (0)));
 
-  cout << "setting up texcoords attrib" << endl << std::flush;
+  cout << endl << endl << "setting up texcoords attrib" << endl << std::flush;
   texcoords_attrib  = glGetAttribLocation(shader, "vTexCoord");
   glEnableVertexAttribArray(texcoords_attrib);
-  glVertexAttribPointer(texcoords_attrib, 3, GL_FLOAT, GL_FALSE, 0, (static_cast<const char*>(0) + (num_bytes_points)));
+  glVertexAttribPointer(texcoords_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points)));
 
-  cout << "setting up normals attrib" << endl << std::flush;
+  cout << endl << endl << "setting up normals attrib" << endl << std::flush;
   normals_attrib    = glGetAttribLocation(shader, "vNormal");
   glEnableVertexAttribArray(normals_attrib);
-  glVertexAttribPointer(normals_attrib, 3, GL_FLOAT, GL_FALSE, 0, (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords)));
+  glVertexAttribPointer(normals_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords)));
 
-  cout << "setting up colors attrib" << endl << std::flush;
+  cout << endl << endl << "setting up colors attrib" << endl << std::flush;
   colors_attrib     = glGetAttribLocation(shader, "vColor");
   glEnableVertexAttribArray(colors_attrib);
-  glVertexAttribPointer(colors_attrib, 4, GL_FLOAT, GL_FALSE, 0, (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords + num_bytes_normals)));
-
-
+  glVertexAttribPointer(colors_attrib, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords + num_bytes_normals)));
 
 
 }

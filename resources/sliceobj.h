@@ -1,6 +1,5 @@
 #include "common.h"
 
-
 //----------------------------------------------------------------------------
 
 class sliceobj
@@ -20,7 +19,8 @@ private:
 //----------------------------------------------------------------------------
 
 void sliceobj::init(std::vector<glm::vec3> points, std::vector<glm::vec3> normals, std::vector<glm::vec4> colors, std::vector<glm::vec3> texcoords)
-{ cout << endl << endl;
+{
+  cout << endl << endl;
   cout << "initializing sliceobj starting at: " << endl;
   cout << "points:    "  << points.size()  << endl;
   cout << "normals:   "  << normals.size() << endl;
@@ -31,15 +31,18 @@ void sliceobj::init(std::vector<glm::vec3> points, std::vector<glm::vec3> normal
 
   start = points.size();
 
+
+//-------------
+//TEST (6 points, 2 triangles)
 //-------------
 
-  points.push_back(glm::vec3(1,0,0));
-  points.push_back(glm::vec3(1,1,0));
-  points.push_back(glm::vec3(0,1,0));
+  points.push_back(glm::vec3(0,0,0));
+  points.push_back(glm::vec3(-0.5, 0.5, 0));
+  points.push_back(glm::vec3( 0.5, 0.5, 0));
 
-  points.push_back(glm::vec3(1,0,0));
-  points.push_back(glm::vec3(0,1,0));
-  points.push_back(glm::vec3(1,0.5,0));
+  points.push_back(glm::vec3(0,0,0));
+  points.push_back(glm::vec3(-0.5,-0.5, 0));
+  points.push_back(glm::vec3( 0.5,-0.5, 0));
 
 //-------------
 

@@ -1,4 +1,5 @@
 #version 450 core
+// #version 330
 
 in vec4 color;
 
