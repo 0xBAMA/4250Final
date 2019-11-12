@@ -13,6 +13,8 @@ public:
   void init();
   void draw();
 
+  GLuint get_shader() {return shader;}
+
 private:
 
   std::vector<glm::vec3>    points;
@@ -84,6 +86,16 @@ void Scene::draw()
 void Scene::gpu_setup()
 {
 
+
+  //COMPILE AND USE SHADERS
+
+  Shader s("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl");
+  shader = s.Program;
+
+  glUseProgram(shader);
+
+
+  //TEXTURES
   glGenTextures(1, &texture); // Generate an ID
   glBindTexture(GL_TEXTURE_3D, texture); // use the specified ID
 
@@ -113,6 +125,13 @@ void Scene::gpu_setup()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
+    glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
+    glBindTexture(GL_TEXTURE_3D, texture);
+
+    glUniform1i( glGetUniformLocation(shader, "tex"), 0);  //texture is in texture unit 0
+
+
+
   }
   else
   {
@@ -140,12 +159,7 @@ void Scene::gpu_setup()
   glBufferSubData(GL_ARRAY_BUFFER, num_bytes_points + num_bytes_texcoords, num_bytes_normals, &normals[0]);
   glBufferSubData(GL_ARRAY_BUFFER, num_bytes_points + num_bytes_texcoords + num_bytes_normals, num_bytes_colors, &colors[0]);
 
-  //COMPILE AND USE SHADERS
 
-  Shader s("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl");
-  shader = s.Program;
-
-  glUseProgram(shader);
 
   //SET UP VERTEX ARRAYS
 

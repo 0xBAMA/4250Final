@@ -44,6 +44,7 @@ MessageCallback( GLenum source,
 Scene scene;
 
 //other globals (glow_balls)
+float t = 0.0;
 
 
 //----------------------------------------------------------------------------
@@ -121,6 +122,12 @@ void mouse( int button, int state, int x, int y )
 
 void timer(int)
 {
+
+  t+=0.01;
+  glUniform1fv(glGetUniformLocation(scene.get_shader(), "t"), 1, &t);
+
+
+
 	glutPostRedisplay();
 	glutTimerFunc(1000.0/60.0, timer, 0);
 }
@@ -165,7 +172,7 @@ int main(int argc, char **argv)
   glutTimerFunc(1000.0/60.0, timer, 0);
 
   scene.init();
-  
+
 //ENTER MAIN LOOP
   glutMainLoop();
 
