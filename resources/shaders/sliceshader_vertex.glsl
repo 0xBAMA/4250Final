@@ -11,6 +11,9 @@ out vec3 texcoord;
 
 uniform float t;
 
+uniform mat4 view;
+uniform mat4 proj;
+
 
 
 //thanks to Neil Mendoza via http://www.neilmendoza.com/glsl-rotation-about-an-arbitrary-axis/
@@ -32,15 +35,10 @@ void main()
 {
 
 
+  vec4 vPosition_local = rotationMatrix(vec3(1,1,0),t)*vec4(vPosition,1.0);
 
 
-  vec4 vPosition_local = rotationMatrix(vec3(0,1,0),t)*vec4(vPosition,1.0);
-
-
-
-
-
-  gl_Position = vPosition_local;
+  gl_Position = proj * view * vPosition_local;
   color = vColor;
   normal = vNormal;
   texcoord = vTexCoord;

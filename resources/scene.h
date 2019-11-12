@@ -184,6 +184,25 @@ void Scene::gpu_setup()
   glVertexAttribPointer(colors_attrib, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords + num_bytes_normals)));
 
 
+
+
+  //projection
+  glm::mat4 proj = JonDefault::proj;
+
+
+  glUniformMatrix4fv(glGetUniformLocation(shader, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+
+
+
+
+
+  //view
+  glm::mat4 view = JonDefault::view;
+
+
+  glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+
 }
 
 //----------------------------------------------------------------------------

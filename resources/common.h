@@ -55,7 +55,7 @@ using std::endl;
 namespace JonDefault{
 
     glm::mat4 view = glm::lookAt(
-        glm::vec3(-1.3f, 0.7f, -1.7f),
+        glm::vec3(-1.3f, 0.9f, -1.7f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
