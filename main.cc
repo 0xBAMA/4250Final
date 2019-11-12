@@ -75,6 +75,10 @@ void keyboard(unsigned char key, int x, int y)
       // glutFullScreen();
       glutFullScreenToggle(); //specific to freeglut
       break;
+
+    case 'a':
+      t+=0.01;
+      break;
   }
 
   glutPostRedisplay();
@@ -123,7 +127,7 @@ void mouse( int button, int state, int x, int y )
 void timer(int)
 {
 
-  t+=0.01;
+  t+=0.0001;
   glUniform1fv(glGetUniformLocation(scene.get_shader(), "t"), 1, &t);
 
 
