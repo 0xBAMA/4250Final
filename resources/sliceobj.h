@@ -6,7 +6,7 @@ class sliceobj
 {
 public:
 
-  void init(std::vector<glm::vec3> points, std::vector<glm::vec3> normals, std::vector<glm::vec4> colors, std::vector<glm::vec3> texcoords);
+  void init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &normals, std::vector<glm::vec4> &colors, std::vector<glm::vec3> &texcoords);
 
   void draw();
 
@@ -18,7 +18,7 @@ private:
 
 //----------------------------------------------------------------------------
 
-void sliceobj::init(std::vector<glm::vec3> points, std::vector<glm::vec3> normals, std::vector<glm::vec4> colors, std::vector<glm::vec3> texcoords)
+void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &normals, std::vector<glm::vec4> &colors, std::vector<glm::vec3> &texcoords)
 {
   cout << endl << endl;
   cout << "initializing sliceobj starting at: " << endl;
@@ -66,15 +66,26 @@ void sliceobj::init(std::vector<glm::vec3> points, std::vector<glm::vec3> normal
 
 //-------------
 
-  texcoords.push_back(glm::vec3(1,0,0));
-  texcoords.push_back(glm::vec3(1,1,0));
-  texcoords.push_back(glm::vec3(0,1,0));
+texcoords.push_back(glm::vec3(0,0,0));
+texcoords.push_back(glm::vec3(-0.5, 0.5, 0));
+texcoords.push_back(glm::vec3( 0.5, 0.5, 0));
 
-  texcoords.push_back(glm::vec3(1,0,0));
-  texcoords.push_back(glm::vec3(1,1,0));
-  texcoords.push_back(glm::vec3(0,1,0));
+texcoords.push_back(glm::vec3(0,0,0));
+texcoords.push_back(glm::vec3(-0.5,-0.5, 0));
+texcoords.push_back(glm::vec3( 0.5,-0.5, 0));
+
 
 //-------------
+
+
+
+
+
+
+
+
+
+
 
   num = points.size() - start;
 

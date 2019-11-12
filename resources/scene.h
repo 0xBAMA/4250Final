@@ -133,7 +133,7 @@ void Scene::gpu_setup()
 
   GLint num_bytes = num_bytes_points + num_bytes_texcoords + num_bytes_normals + num_bytes_colors;
 
-  glBufferData(GL_ARRAY_BUFFER, num_bytes, NULL, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, num_bytes, NULL, GL_DYNAMIC_DRAW);
 
   glBufferSubData(GL_ARRAY_BUFFER, 0, num_bytes_points, &points[0]);
   glBufferSubData(GL_ARRAY_BUFFER, num_bytes_points, num_bytes_texcoords, &texcoords[0]);
