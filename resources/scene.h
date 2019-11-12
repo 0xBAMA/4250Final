@@ -102,6 +102,8 @@ void Scene::gpu_setup()
 
   unsigned error = lodepng::decode( image_data, width, height, TEX_PATH, LodePNGColorType::LCT_RGBA, 8 );
 
+  cout << "  the size of the 3d texture image is " << image_data.size() << " bytes";
+
   if( error == 0 )
   {
     cout << endl << "texture loaded" << endl;
