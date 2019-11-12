@@ -36,6 +36,17 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
 
 
 
+
+
+
+
+
+
+
+//THIS NEEDS TO BE BROKEN UP INTO A SWITCH STATEMENT, TO DO THAT ROUND ROBIN SCHEME
+
+
+
   for(float x =-0.5f; x <=0.5f; x+=increment)
   {
     points.push_back(glm::vec3(x,0.5,0.5));
@@ -147,13 +158,13 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
     colors.push_back(glm::vec4(z,z,z,1.0));
     colors.push_back(glm::vec4(z,z,z,1.0));
 
-    normals.push_back(glm::vec3(1,0,0));
-    normals.push_back(glm::vec3(1,0,0));
-    normals.push_back(glm::vec3(1,0,0));
+    normals.push_back(glm::vec3(0,0,1));
+    normals.push_back(glm::vec3(0,0,1));
+    normals.push_back(glm::vec3(0,0,1));
 
-    normals.push_back(glm::vec3(1,0,0));
-    normals.push_back(glm::vec3(1,0,0));
-    normals.push_back(glm::vec3(1,0,0));
+    normals.push_back(glm::vec3(0,0,1));
+    normals.push_back(glm::vec3(0,0,1));
+    normals.push_back(glm::vec3(0,0,1));
 
   }
 
@@ -185,13 +196,13 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
     colors.push_back(glm::vec4(z,z,z,1.0));
     colors.push_back(glm::vec4(z,z,z,1.0));
 
-    normals.push_back(glm::vec3(-1,0,0));
-    normals.push_back(glm::vec3(-1,0,0));
-    normals.push_back(glm::vec3(-1,0,0));
+    normals.push_back(glm::vec3(0,0,-1));
+    normals.push_back(glm::vec3(0,0,-1));
+    normals.push_back(glm::vec3(0,0,-1));
 
-    normals.push_back(glm::vec3(-1,0,0));
-    normals.push_back(glm::vec3(-1,0,0));
-    normals.push_back(glm::vec3(-1,0,0));
+    normals.push_back(glm::vec3(0,0,-1));
+    normals.push_back(glm::vec3(0,0,-1));
+    normals.push_back(glm::vec3(0,0,-1));
 
   }
 
