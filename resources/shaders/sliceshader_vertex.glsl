@@ -35,7 +35,7 @@ void main()
 {
 
 
-  vec4 vPosition_local = rotationMatrix(vec3(1,1,0),t)*vec4(vPosition,1.0);
+  vec4 vPosition_local = rotationMatrix(vec3(0.1,1,0),t)*vec4(vPosition,1.0);
 
 
   gl_Position = proj * view * vPosition_local;

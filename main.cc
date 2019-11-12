@@ -72,7 +72,6 @@ void keyboard(unsigned char key, int x, int y)
       break;
 
     case 'f':
-      // glutFullScreen();
       glutFullScreenToggle(); //specific to freeglut
       break;
 
@@ -159,6 +158,8 @@ int main(int argc, char **argv)
 
   glutInitWindowSize(720,480);
   glutCreateWindow("Window");
+  glutFullScreen();
+
 
   glewInit();
 
