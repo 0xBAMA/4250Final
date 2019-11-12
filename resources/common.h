@@ -60,7 +60,7 @@ namespace JonDefault{
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
 
-    glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1366.0f / 768.0f, 0.25f, 6.0f);
+    glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1080.0f / 1920.0f, 0.25f, 6.0f);
 
     // typedef enum state_t
     // {//control of the player's position

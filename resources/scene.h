@@ -35,10 +35,6 @@ private:
   GLuint normals_attrib;
   GLuint colors_attrib;
 
-  //uniforms
-
-
-
 
   void gpu_setup();
 
@@ -128,6 +124,7 @@ void Scene::gpu_setup()
     glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
     glBindTexture(GL_TEXTURE_3D, texture);
 
+    //I like referring to uniforms this way, rather than keeping a number in the class
     glUniform1i( glGetUniformLocation(shader, "tex"), 0);  //texture is in texture unit 0
 
 
@@ -163,6 +160,8 @@ void Scene::gpu_setup()
 
   //SET UP VERTEX ARRAYS
 
+  cout << endl << endl << "if any of these attribs are giving errors, it's because they were optimized out of the shader (not everything is implemented yet)" << endl << endl;
+
   cout << endl << endl << "setting up points attrib" << endl << std::flush;
   points_attrib     = glGetAttribLocation(shader, "vPosition");
   glEnableVertexAttribArray(points_attrib);
@@ -185,23 +184,16 @@ void Scene::gpu_setup()
 
 
 
-
   //projection
   glm::mat4 proj = JonDefault::proj;
 
-
   glUniformMatrix4fv(glGetUniformLocation(shader, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
-
-
-
 
 
   //view
   glm::mat4 view = JonDefault::view;
 
-
   glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
-
 
 }
 
