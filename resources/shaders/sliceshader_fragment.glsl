@@ -16,7 +16,7 @@ void main()
 
   if(gl_FrontFacing == true)
   {
-    fcolor = texture(tex, texcoord+vec3(0.5*sin(t),0.5,sin(t)));
+    fcolor = texture(tex, texcoord+vec3(0.5*sin(t),0.5+2*sin(t),sin(t)));
   }
   else
   {
