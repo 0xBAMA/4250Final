@@ -32,7 +32,7 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
   start = points.size();
 
 
-  float increment = 0.001;
+  float increment = 0.01;
 
 
 

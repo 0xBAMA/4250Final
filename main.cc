@@ -160,7 +160,6 @@ int main(int argc, char **argv)
   glutCreateWindow("Window");
   glutFullScreen();
 
-
   glewInit();
 
   //DEBUG
