@@ -102,11 +102,11 @@ void Scene::gpu_setup()
 
   unsigned error = lodepng::decode( image_data, width, height, TEX_PATH, LodePNGColorType::LCT_RGBA, 8 );
 
-  cout << "  the size of the 3d texture image is " << image_data.size() << " bytes";
 
   if( error == 0 )
   {
     cout << endl << "texture loaded" << endl;
+    cout << "  the size of the 3d texture image is " << image_data.size() << " bytes";
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
     glGenerateMipmap(GL_TEXTURE_3D);
 
