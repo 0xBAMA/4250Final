@@ -36,10 +36,6 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
 
 
 
-
-
-
-
 //THIS NEEDS TO BE BROKEN UP INTO A SWITCH STATEMENT, TO DO THAT ROUND ROBIN SCHEME
 
   int count = 0;
@@ -123,82 +119,82 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
         normals.push_back(glm::vec3(-1,0,0));
         normals.push_back(glm::vec3(-1,0,0));
         break;
-
-    //----------------
-
-      case 2:
-        points.push_back(glm::vec3(0.5,0.5,zplus));
-        points.push_back(glm::vec3(-0.5,0.5,zplus));
-        points.push_back(glm::vec3(0.5,-0.5,zplus));
-
-        points.push_back(glm::vec3(-0.5,-0.5,zplus));
-        points.push_back(glm::vec3(0.5,-0.5,zplus));
-        points.push_back(glm::vec3(-0.5,0.5,zplus));
-
-
-        texcoords.push_back(glm::vec3(0.5,0.5,zplus));
-        texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
-        texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
-
-        texcoords.push_back(glm::vec3(-0.5,-0.5,zplus));
-        texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
-        texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
-
-
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-        colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-
-        normals.push_back(glm::vec3(0,0,1));
-        normals.push_back(glm::vec3(0,0,1));
-        normals.push_back(glm::vec3(0,0,1));
-
-        normals.push_back(glm::vec3(0,0,1));
-        normals.push_back(glm::vec3(0,0,1));
-        normals.push_back(glm::vec3(0,0,1));
-        break;
-
-    //----------------
-
-      case 3:
-        points.push_back(glm::vec3(0.5,0.5,zminus));
-        points.push_back(glm::vec3(0.5,-0.5,zminus));
-        points.push_back(glm::vec3(-0.5,0.5,zminus));
-
-        points.push_back(glm::vec3(-0.5,-0.5,zminus));
-        points.push_back(glm::vec3(-0.5,0.5,zminus));
-        points.push_back(glm::vec3(0.5,-0.5,zminus));
-
-
-        texcoords.push_back(glm::vec3(0.5,0.5,zminus));
-        texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
-        texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
-
-        texcoords.push_back(glm::vec3(-0.5,-0.5,zminus));
-        texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
-        texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
-
-
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-        colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-
-        normals.push_back(glm::vec3(0,0,-1));
-        normals.push_back(glm::vec3(0,0,-1));
-        normals.push_back(glm::vec3(0,0,-1));
-
-        normals.push_back(glm::vec3(0,0,-1));
-        normals.push_back(glm::vec3(0,0,-1));
-        normals.push_back(glm::vec3(0,0,-1));
-        break;
+    //
+    // //----------------
+    //
+    //   case 2:
+    //     points.push_back(glm::vec3(0.5,0.5,zplus));
+    //     points.push_back(glm::vec3(-0.5,0.5,zplus));
+    //     points.push_back(glm::vec3(0.5,-0.5,zplus));
+    //
+    //     points.push_back(glm::vec3(-0.5,-0.5,zplus));
+    //     points.push_back(glm::vec3(0.5,-0.5,zplus));
+    //     points.push_back(glm::vec3(-0.5,0.5,zplus));
+    //
+    //
+    //     texcoords.push_back(glm::vec3(0.5,0.5,zplus));
+    //     texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
+    //     texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
+    //
+    //     texcoords.push_back(glm::vec3(-0.5,-0.5,zplus));
+    //     texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
+    //     texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
+    //
+    //
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
+    //
+    //     normals.push_back(glm::vec3(0,0,1));
+    //     normals.push_back(glm::vec3(0,0,1));
+    //     normals.push_back(glm::vec3(0,0,1));
+    //
+    //     normals.push_back(glm::vec3(0,0,1));
+    //     normals.push_back(glm::vec3(0,0,1));
+    //     normals.push_back(glm::vec3(0,0,1));
+    //     break;
+    //
+    // //----------------
+    //
+    //   case 3:
+    //     points.push_back(glm::vec3(0.5,0.5,zminus));
+    //     points.push_back(glm::vec3(0.5,-0.5,zminus));
+    //     points.push_back(glm::vec3(-0.5,0.5,zminus));
+    //
+    //     points.push_back(glm::vec3(-0.5,-0.5,zminus));
+    //     points.push_back(glm::vec3(-0.5,0.5,zminus));
+    //     points.push_back(glm::vec3(0.5,-0.5,zminus));
+    //
+    //
+    //     texcoords.push_back(glm::vec3(0.5,0.5,zminus));
+    //     texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
+    //     texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
+    //
+    //     texcoords.push_back(glm::vec3(-0.5,-0.5,zminus));
+    //     texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
+    //     texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
+    //
+    //
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
+    //
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //     normals.push_back(glm::vec3(0,0,-1));
+    //     break;
       }
     count++;
   }

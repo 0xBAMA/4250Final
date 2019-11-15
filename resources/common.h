@@ -55,12 +55,13 @@ using std::endl;
 namespace JonDefault{
 
     glm::mat4 view = glm::lookAt(
-        glm::vec3(-1.3f, 1.3f, -1.7f),
+        glm::vec3(-1.0f, 1.0f, -1.0f),
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(0.0f, 1.0f, 0.0f)
     );
 
-    glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1080.0f / 1920.0f, 0.25f, 6.0f);
+    // glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1080.0f / 1920.0f, 0.25f, 6.0f);
+    glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1920.0f / 1080.0f, 0.25f, 6.0f);
 
     // typedef enum state_t
     // {//control of the player's position

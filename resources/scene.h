@@ -1,9 +1,76 @@
 #include "common.h"
 #include "sliceobj.h"
 
-#define TEX_PATH "resources/textures/models/save.png"
 
-// /home/jb/Documents/4250/4250Final/resources/textures/models/save.png
+
+
+
+
+// #define TEX_PATH "resources/textures/models/save-copy24.png"
+#define TEX_PATH "resources/textures/models/save.png"
+// #define TEX_PATH "resources/textures/models/heads with black.png"
+// #define TEX_PATH "resources/textures/models/heads.png"
+// #define TEX_PATH "resources/textures/models/save-copy2.png"
+// #define TEX_PATH "resources/textures/models/save-copy3.png"
+// #define TEX_PATH "resources/textures/models/save-copy4.png"
+// #define TEX_PATH "resources/textures/models/save-copy5.png"
+// #define TEX_PATH "resources/textures/models/save-copy9.png"
+// #define TEX_PATH "resources/textures/models/save-copy10.png"
+// #define TEX_PATH "resources/textures/models/save-copy13.png"
+// #define TEX_PATH "resources/textures/models/save-copy15.png"
+// #define TEX_PATH "resources/textures/models/save-copy16.png"
+// #define TEX_PATH "resources/textures/models/save-copy17.png"
+// #define TEX_PATH "resources/textures/models/save-copy18.png"
+// #define TEX_PATH "resources/textures/models/save-copy19.png"
+// #define TEX_PATH "resources/textures/models/save-copy21.png"
+// #define TEX_PATH "resources/textures/models/save-copy22.png"
+// #define TEX_PATH "resources/textures/models/save-copy25.png"
+// #define TEX_PATH "resources/textures/models/save-copy26.png"
+// #define TEX_PATH "resources/textures/models/save-copy27.png"
+
+
+
+
+
+
+
+
+
+
+
+// #define TEX_PATH "resources/textures/models/save-copy20.png"
+// #define TEX_PATH "resources/textures/models/save-copy6.png"
+// #define TEX_PATH "resources/textures/models/save-copy7.png"
+// #define TEX_PATH "resources/textures/models/save-copy8.png"
+// #define TEX_PATH "resources/textures/models/save-copy11.png"
+// #define TEX_PATH "resources/textures/models/save-copy12.png"
+// #define TEX_PATH "resources/textures/models/ambient occlusion visualized.png"
+// #define TEX_PATH "resources/textures/models/bigass.png"
+// #define TEX_PATH "resources/textures/models/palette test.png"
+// #define TEX_PATH "resources/textures/models/save1.png"
+// #define TEX_PATH "resources/textures/models/save-copy14.png"
+// #define TEX_PATH "resources/textures/models/save-copy23.png"
+// #define TEX_PATH "resources/textures/models/save-copy28.png"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //----------------------------------------------------------------------------
 
@@ -96,7 +163,6 @@ void Scene::gpu_setup()
   glBindTexture(GL_TEXTURE_3D, texture); // use the specified ID
 
 
-
   unsigned width, height;
   std::vector<unsigned char> image_data;
 
@@ -110,13 +176,10 @@ void Scene::gpu_setup()
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
     glGenerateMipmap(GL_TEXTURE_3D);
 
-    //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
-
-
-
+    //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones, GL_REPEAT
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
 
 
     // This one looks the best - other options are GL_LINEAR, GL_NEAREST, then the mipmap ones
