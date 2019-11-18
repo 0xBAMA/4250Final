@@ -6,8 +6,8 @@
 
 
 
-// #define TEX_PATH "resources/textures/models/save-copy24.png"
 #define TEX_PATH "resources/textures/models/save.png"
+// #define TEX_PATH "resources/textures/models/save-copy24.png"
 // #define TEX_PATH "resources/textures/models/heads with black.png"
 // #define TEX_PATH "resources/textures/models/heads.png"
 // #define TEX_PATH "resources/textures/models/save-copy2.png"
@@ -118,7 +118,10 @@ void Scene::init()
   texcoords.clear();
 
   glEnable(GL_DEPTH_TEST);
+
+  glEnable(GL_POINT_SMOOTH);
   glEnable(GL_LINE_SMOOTH);
+  glEnable(GL_POLYGON_SMOOTH);
 
   // giving an invalid enum warning, I guess it's just core spec now
   // glEnable(GL_TEXTURE_3D);
@@ -255,7 +258,6 @@ void Scene::gpu_setup()
   glm::mat4 proj = JonDefault::proj;
 
   glUniformMatrix4fv(glGetUniformLocation(shader, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
-
 
   //view
   glm::mat4 view = JonDefault::view;
