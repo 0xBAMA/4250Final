@@ -6,27 +6,27 @@
 
 
 
-#define TEX_PATH "resources/textures/models/save.png"
-// #define TEX_PATH "resources/textures/models/save-copy24.png"
-// #define TEX_PATH "resources/textures/models/heads with black.png"
-// #define TEX_PATH "resources/textures/models/heads.png"
-// #define TEX_PATH "resources/textures/models/save-copy2.png"
-// #define TEX_PATH "resources/textures/models/save-copy3.png"
-// #define TEX_PATH "resources/textures/models/save-copy4.png"
-// #define TEX_PATH "resources/textures/models/save-copy5.png"
-// #define TEX_PATH "resources/textures/models/save-copy9.png"
-// #define TEX_PATH "resources/textures/models/save-copy10.png"
-// #define TEX_PATH "resources/textures/models/save-copy13.png"
-// #define TEX_PATH "resources/textures/models/save-copy15.png"
-// #define TEX_PATH "resources/textures/models/save-copy16.png"
-// #define TEX_PATH "resources/textures/models/save-copy17.png"
-// #define TEX_PATH "resources/textures/models/save-copy18.png"
-// #define TEX_PATH "resources/textures/models/save-copy19.png"
-// #define TEX_PATH "resources/textures/models/save-copy21.png"
-// #define TEX_PATH "resources/textures/models/save-copy22.png"
-// #define TEX_PATH "resources/textures/models/save-copy25.png"
-// #define TEX_PATH "resources/textures/models/save-copy26.png"
-// #define TEX_PATH "resources/textures/models/save-copy27.png"
+// #define TEX_PATH "resources/textures/models/save.png"              //CASTLE
+// #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
+// #define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
+// #define TEX_PATH "resources/textures/models/heads.png"             //MRI data with no contrasting background added
+// #define TEX_PATH "resources/textures/models/save-copy2.png"        //perlin noise with tube cutout
+// #define TEX_PATH "resources/textures/models/save-copy3.png"        //trees with purple centers
+// #define TEX_PATH "resources/textures/models/save-copy4.png"        //trees with purple centers, different spacing
+// #define TEX_PATH "resources/textures/models/save-copy5.png"        //trees with clouds
+// #define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
+// #define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
+// #define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
+// #define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
+// #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
+// #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
+// #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
+// #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
+// #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
+// #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
+// #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
+// #define TEX_PATH "resources/textures/models/save-copy26.png"       //bars and rose
+// #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
 
 
 

@@ -11,12 +11,16 @@ uniform sampler3D tex;
 uniform float t;
 
 
+
+//float scale = 0.2;    //makes the texture larger
+float scale = 3.0;    //makes the texture smaller - makes it loop a bunch of times
+
 void main()
 {
 
   if(gl_FrontFacing == true)
   {
-    fcolor = texture(tex, texcoord+vec3(0.5*sin(t),0.5+2*sin(t),sin(t)));
+    fcolor = texture(tex, scale*texcoord+vec3(0.5*sin(t),0.5+2*sin(t),sin(t)));
   }
   else
   {
