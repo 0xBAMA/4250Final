@@ -8,7 +8,7 @@
 
 // #define TEX_PATH "resources/textures/models/save.png"              //CASTLE
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
-// #define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
+#define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
 // #define TEX_PATH "resources/textures/models/heads.png"             //MRI data with no contrasting background added
 // #define TEX_PATH "resources/textures/models/save-copy2.png"        //perlin noise with tube cutout
 // #define TEX_PATH "resources/textures/models/save-copy3.png"        //trees with purple centers

@@ -12,8 +12,8 @@ uniform float t;
 
 
 
-//float scale = 0.2;    //makes the texture larger
-float scale = 3.0;    //makes the texture smaller - makes it loop a bunch of times
+float scale = 0.4;    //makes the texture larger
+// float scale = 3.0;    //makes the texture smaller - makes it loop a bunch of times
 
 void main()
 {

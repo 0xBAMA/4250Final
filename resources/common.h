@@ -63,17 +63,6 @@ namespace JonDefault{
     // glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1080.0f / 1920.0f, 0.25f, 6.0f);
     glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1920.0f / 1080.0f, 0.25f, 6.0f);
 
-    // typedef enum state_t
-    // {//control of the player's position
-    //   floor1=1,
-    //   floor2=2,
-    //   floor3=3,
-    //   onetotwo=4,
-    //   twotothree=5,
-    //   threetotwo=6,
-    //   twotoone=7
-    // } state;
-
     float twopi = 2*3.1415926535;
 
 }
