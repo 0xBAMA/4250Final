@@ -63,7 +63,7 @@ namespace JonDefault{
     // glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1080.0f / 1920.0f, 0.25f, 6.0f);
     glm::mat4 proj = glm::perspective(glm::radians(65.0f), 1920.0f / 1080.0f, 0.25f, 6.0f);
 
-    float twopi = 2*3.1415926535;
+    double twopi = 2*3.1415926535;
 
 }
 

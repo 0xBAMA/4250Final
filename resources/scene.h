@@ -7,8 +7,7 @@
 
 
 // #define TEX_PATH "resources/textures/models/save.png"              //CASTLE
-// #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
-#define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
+// #define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
 // #define TEX_PATH "resources/textures/models/heads.png"             //MRI data with no contrasting background added
 // #define TEX_PATH "resources/textures/models/save-copy2.png"        //perlin noise with tube cutout
 // #define TEX_PATH "resources/textures/models/save-copy3.png"        //trees with purple centers
@@ -23,10 +22,12 @@
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
 // #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
 // #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
-// #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
+#define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
+// #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
 // #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
 // #define TEX_PATH "resources/textures/models/save-copy26.png"       //bars and rose
 // #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
+// #define TEX_PATH "resources/textures/models/save1.png"             //star trek equipment
 
 
 
@@ -38,19 +39,18 @@
 
 
 
-// #define TEX_PATH "resources/textures/models/save-copy20.png"
-// #define TEX_PATH "resources/textures/models/save-copy6.png"
-// #define TEX_PATH "resources/textures/models/save-copy7.png"
-// #define TEX_PATH "resources/textures/models/save-copy8.png"
-// #define TEX_PATH "resources/textures/models/save-copy11.png"
-// #define TEX_PATH "resources/textures/models/save-copy12.png"
+// #define TEX_PATH "resources/textures/models/save-copy20.png"   //can't see through the noise
+// #define TEX_PATH "resources/textures/models/save-copy6.png"    //orange and white noise
+// #define TEX_PATH "resources/textures/models/save-copy7.png"    //orange and white noise
+// #define TEX_PATH "resources/textures/models/save-copy8.png"    //yellow shell in noise
+// #define TEX_PATH "resources/textures/models/save-copy11.png"   //octaves but weird
+// #define TEX_PATH "resources/textures/models/save-copy12.png"   //same as previous
 // #define TEX_PATH "resources/textures/models/ambient occlusion visualized.png"
-// #define TEX_PATH "resources/textures/models/bigass.png"
+// #define TEX_PATH "resources/textures/models/bigass.png"        //texture made in gimp with gradients
 // #define TEX_PATH "resources/textures/models/palette test.png"
-// #define TEX_PATH "resources/textures/models/save1.png"
-// #define TEX_PATH "resources/textures/models/save-copy14.png"
-// #define TEX_PATH "resources/textures/models/save-copy23.png"
-// #define TEX_PATH "resources/textures/models/save-copy28.png"
+// #define TEX_PATH "resources/textures/models/save-copy14.png"   //pink aura
+// #define TEX_PATH "resources/textures/models/save-copy23.png"   //very dark
+// #define TEX_PATH "resources/textures/models/save-copy28.png"   //happy birthday text
 
 
 
@@ -196,9 +196,6 @@ void Scene::gpu_setup()
 
     //I like referring to uniforms this way, rather than keeping a number in the class
     glUniform1i( glGetUniformLocation(shader, "tex"), 0);  //texture is in texture unit 0
-
-
-
   }
   else
   {

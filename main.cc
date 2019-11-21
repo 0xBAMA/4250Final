@@ -63,12 +63,28 @@ void display()
 
 //----------------------------------------------------------------------------
 
+
+float scale = 1.0f;
+
 void keyboard(unsigned char key, int x, int y)
 {
   switch (key) {
 
     case 033:
       exit(EXIT_SUCCESS);
+      break;
+
+
+    case '=':   //+
+      scale *= 0.99;
+      glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
+      cout << scale << endl;
+      break;
+
+    case '-':   //-
+      scale /= 0.99;
+      glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
+      cout << scale << endl;
       break;
 
     case 'f':
