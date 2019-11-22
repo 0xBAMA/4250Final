@@ -1,4 +1,4 @@
-#include "common.h"
+ #include "common.h"
 
 //----------------------------------------------------------------------------
 
@@ -12,7 +12,8 @@ public:
 
 private:
 
-  int start, num; //indexing geometry
+  int ortho_start, ortho_num; //indexing geometry
+  int persp_start, persp_num; //indexing geometry
 
 };
 
@@ -29,181 +30,157 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
   cout << endl << endl;
 
 
-  start = points.size();
-
-
-  float increment = 0.0005;
+  ortho_start = points.size();
 
 
 
-//THIS NEEDS TO BE BROKEN UP INTO A SWITCH STATEMENT, TO DO THAT ROUND ROBIN SCHEME
+  //this should be two triangles, which span the entire screen.
 
-  int count = 0;
+  //I am excited to implement this on the GPU for the first time - some of the earlier
+  //iterations of voraldo included logic similar to this, but entirely CPU based
 
-  for(float xplus =-0.5f, xminus = 0.5f, zplus = -0.5f, zminus = 0.5f;
-    xplus <=0.5f,xminus >= -0.5f, zplus <= 0.5f, zminus >= -0.5f;
-    xplus+=increment,xminus-=increment,zplus+=increment,zminus-=increment)
-  {
+  //
+  // A---------------B
+  // |          .    |
+  // |       .       |
+  // |    .          |
+  // |               |
+  // C---------------D
+  //
 
-    switch(count%4)
+
+  //diagonal runs from C to B
+
+  //we are at 0 in z
+  //A is -1, 1
+  //B is  1. 1
+  //C is -1,-1
+  //D is  1,-1
+
+  points.push_back(glm::vec3(-1, 1, 0));  //A
+  points.push_back(glm::vec3(-1,-1, 0));  //C
+  points.push_back(glm::vec3( 1, 1, 0));  //B
+
+  points.push_back(glm::vec3( 1, 1, 0));  //B
+  points.push_back(glm::vec3(-1,-1, 0));  //C
+  points.push_back(glm::vec3( 1,-1, 0));  //D
+
+
+  texcoords.push_back(glm::vec3(-1, 1, 0));  //A
+  texcoords.push_back(glm::vec3(-1,-1, 0));  //C
+  texcoords.push_back(glm::vec3( 1, 1, 0));  //B
+
+  texcoords.push_back(glm::vec3( 1, 1, 0));  //B
+  texcoords.push_back(glm::vec3(-1,-1, 0));  //C
+  texcoords.push_back(glm::vec3( 1,-1, 0));  //D
+
+
+  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(0,0,1));
+
+  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(0,0,1));
+  normals.push_back(glm::vec3(0,0,1));
+
+
+
+  //these are passed to gl_PointCoord untouched, so that they just cover the screen.
+  // The main goal from this step is to have fragments that cover the screen, once
+  //  i.e. create a pixel shader type of environment
+
+  // we will need resolution passed in, or to find out if there is GLSL built in resolution
+  // The fragcoord locations are done in (floating point type) rounded-to-the-nearest-integer
+  //   pixels.
+
+  //
+
+
+
+
+
+
+
+
+
+  ortho_num = points.size() - ortho_start;
+
+
+
+
+
+
+  persp_start = points.size();
+
+  float divisions = 16.0f;
+  float z = 0.0f;
+  float depth = 3.0f;
+
+  for(float x = -1.0f; x <= 1.0f; x += 2.0f/divisions)
+    for(float y = -1.0f; y <= 1.0f; y += 2.0f/divisions)
     {
-      case 0:
-        points.push_back(glm::vec3(xplus,0.5,0.5));
-        points.push_back(glm::vec3(xplus,-0.5,0.5));
-        points.push_back(glm::vec3(xplus,0.5,-0.5));
 
-        points.push_back(glm::vec3(xplus,-0.5,-0.5));
-        points.push_back(glm::vec3(xplus,0.5,-0.5));
-        points.push_back(glm::vec3(xplus,-0.5,0.5));
+      z = 0;
 
-
-        texcoords.push_back(glm::vec3(xplus,0.5,0.5));
-        texcoords.push_back(glm::vec3(xplus,-0.5,0.5));
-        texcoords.push_back(glm::vec3(xplus,0.5,-0.5));
-
-        texcoords.push_back(glm::vec3(xplus,-0.5,-0.5));
-        texcoords.push_back(glm::vec3(xplus,0.5,-0.5));
-        texcoords.push_back(glm::vec3(xplus,-0.5,0.5));
+      if((x+1.0f/divisions) > 0)
+        z += -exp(x-4);
+      else
+        z += -exp(-x-4);
 
 
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-        colors.push_back(glm::vec4(xplus,xplus,xplus,1.0));
-
-        normals.push_back(glm::vec3(1,0,0));
-        normals.push_back(glm::vec3(1,0,0));
-        normals.push_back(glm::vec3(1,0,0));
-
-        normals.push_back(glm::vec3(1,0,0));
-        normals.push_back(glm::vec3(1,0,0));
-        normals.push_back(glm::vec3(1,0,0));
-        break;
-
-    //----------------
-      case 1:
-        points.push_back(glm::vec3(xminus,0.5,0.5));
-        points.push_back(glm::vec3(xminus,0.5,-0.5));
-        points.push_back(glm::vec3(xminus,-0.5,0.5));
-
-        points.push_back(glm::vec3(xminus,-0.5,-0.5));
-        points.push_back(glm::vec3(xminus,-0.5,0.5));
-        points.push_back(glm::vec3(xminus,0.5,-0.5));
+      if((y+1.0f/divisions) > 0)
+        z += -exp(y-4);
+      else
+        z += -exp(-y-4);
 
 
-        texcoords.push_back(glm::vec3(xminus,0.5,0.5));
-        texcoords.push_back(glm::vec3(xminus,0.5,-0.5));
-        texcoords.push_back(glm::vec3(xminus,-0.5,0.5));
+      points.push_back(glm::vec3(x, y+2.0f/divisions, z));  //A
+      points.push_back(glm::vec3(x,y, z));  //C
+      points.push_back(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, z));  //B
 
-        texcoords.push_back(glm::vec3(xminus,-0.5,-0.5));
-        texcoords.push_back(glm::vec3(xminus,-0.5,0.5));
-        texcoords.push_back(glm::vec3(xminus,0.5,-0.5));
+      points.push_back(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, z));  //B
+      points.push_back(glm::vec3(x,y, z));  //C
+      points.push_back(glm::vec3(x+2.0f/divisions,y, z));  //D
 
 
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
 
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
-        colors.push_back(glm::vec4(xminus,xminus,xminus,1.0));
+      texcoords.push_back(glm::vec3(x, y+2.0f/divisions, 0));  //A
+      texcoords.push_back(glm::vec3(x,y, 0));  //C
+      texcoords.push_back(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, 0));  //B
 
-        normals.push_back(glm::vec3(-1,0,0));
-        normals.push_back(glm::vec3(-1,0,0));
-        normals.push_back(glm::vec3(-1,0,0));
+      texcoords.push_back(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, 0));  //B
+      texcoords.push_back(glm::vec3(x,y, 0));  //C
+      texcoords.push_back(glm::vec3(x+2.0f/divisions,y, 0));  //D
 
-        normals.push_back(glm::vec3(-1,0,0));
-        normals.push_back(glm::vec3(-1,0,0));
-        normals.push_back(glm::vec3(-1,0,0));
-        break;
-    //
-    // //----------------
-    //
-    //   case 2:
-    //     points.push_back(glm::vec3(0.5,0.5,zplus));
-    //     points.push_back(glm::vec3(-0.5,0.5,zplus));
-    //     points.push_back(glm::vec3(0.5,-0.5,zplus));
-    //
-    //     points.push_back(glm::vec3(-0.5,-0.5,zplus));
-    //     points.push_back(glm::vec3(0.5,-0.5,zplus));
-    //     points.push_back(glm::vec3(-0.5,0.5,zplus));
-    //
-    //
-    //     texcoords.push_back(glm::vec3(0.5,0.5,zplus));
-    //     texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
-    //     texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
-    //
-    //     texcoords.push_back(glm::vec3(-0.5,-0.5,zplus));
-    //     texcoords.push_back(glm::vec3(0.5,-0.5,zplus));
-    //     texcoords.push_back(glm::vec3(-0.5,0.5,zplus));
-    //
-    //
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //     colors.push_back(glm::vec4(zplus,zplus,zplus,1.0));
-    //
-    //     normals.push_back(glm::vec3(0,0,1));
-    //     normals.push_back(glm::vec3(0,0,1));
-    //     normals.push_back(glm::vec3(0,0,1));
-    //
-    //     normals.push_back(glm::vec3(0,0,1));
-    //     normals.push_back(glm::vec3(0,0,1));
-    //     normals.push_back(glm::vec3(0,0,1));
-    //     break;
-    //
-    // //----------------
-    //
-    //   case 3:
-    //     points.push_back(glm::vec3(0.5,0.5,zminus));
-    //     points.push_back(glm::vec3(0.5,-0.5,zminus));
-    //     points.push_back(glm::vec3(-0.5,0.5,zminus));
-    //
-    //     points.push_back(glm::vec3(-0.5,-0.5,zminus));
-    //     points.push_back(glm::vec3(-0.5,0.5,zminus));
-    //     points.push_back(glm::vec3(0.5,-0.5,zminus));
-    //
-    //
-    //     texcoords.push_back(glm::vec3(0.5,0.5,zminus));
-    //     texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
-    //     texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
-    //
-    //     texcoords.push_back(glm::vec3(-0.5,-0.5,zminus));
-    //     texcoords.push_back(glm::vec3(-0.5,0.5,zminus));
-    //     texcoords.push_back(glm::vec3(0.5,-0.5,zminus));
-    //
-    //
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //     colors.push_back(glm::vec4(zminus,zminus,zminus,1.0));
-    //
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //     normals.push_back(glm::vec3(0,0,-1));
-    //     break;
-      }
-    count++;
-  }
+
+
+      normals.push_back(glm::normalize(glm::vec3(x, y+2.0f/divisions, z+depth)));  //A
+      normals.push_back(glm::normalize(glm::vec3(x,y, z+depth)));  //C
+      normals.push_back(glm::normalize(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, z+depth)));  //B
+
+      normals.push_back(glm::normalize(glm::vec3(x+2.0f/divisions, y+2.0f/divisions, z+depth)));  //B
+      normals.push_back(glm::normalize(glm::vec3(x,y, z+depth)));  //C
+      normals.push_back(glm::normalize(glm::vec3(x+2.0f/divisions,y, z+depth)));  //D
 
 
 
 
 
-  num = points.size() - start;
+    }
+
+  persp_num = points.size() - persp_start;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   cout << endl << endl;
@@ -220,7 +197,8 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
 
 void sliceobj::draw()
 {
-  glDrawArrays(GL_TRIANGLES, start, num);
+  glDrawArrays(GL_TRIANGLES, ortho_start, ortho_num);
+  glDrawArrays(GL_TRIANGLES, persp_start, persp_num);
 }
 
 //----------------------------------------------------------------------------

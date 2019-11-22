@@ -33,11 +33,28 @@ mat4 rotationMatrix(vec3 axis, float angle)
 
 void main()
 {
+  //
+  // vec4 vPosition_local = rotationMatrix(vec3(0,0.3,1),0.1*t)*rotationMatrix(vec3(0.1,1,0),t)*vec4(vPosition,1.0);
+  //
 
-  vec4 vPosition_local = rotationMatrix(vec3(0,0.3,1),0.1*t)*rotationMatrix(vec3(0.1,1,0),t)*vec4(vPosition,1.0);
+
+  vec4 vPosition_local = vec4(vPosition,1.0);
+
+
+  // color = vColor;
+  color = vec4(1,0,0,1);
+
+  if(vPosition.z != 0)
+  {
+    // vPosition_local.z += sin(t);
+    vPosition_local += sin(t)*vec4(vNormal,0);
+    color = vec4(0,1,0,1);
+  }
+
 
   gl_Position = proj * view * vPosition_local;
-  color = vColor;
+  // gl_Position = vec4(vPosition,1.0);
+
   normal = vNormal;
   texcoord = vTexCoord;
 
