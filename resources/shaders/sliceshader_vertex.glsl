@@ -5,6 +5,7 @@ in vec3 vTexCoord;
 in vec3 vNormal;
 in vec4 vColor;
 
+out vec3 position;
 out vec4 color;
 out vec3 normal;
 out vec3 texcoord;
@@ -53,9 +54,10 @@ void main()
   }
 
 
-  // gl_Position = proj * view * vPosition_local;
   gl_Position = vPosition_local;
+  position=gl_Position.xyz;
 
+  // gl_Position = proj * view * vPosition_local;
 
 
 

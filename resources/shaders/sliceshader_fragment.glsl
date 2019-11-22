@@ -1,5 +1,6 @@
 #version 450 core
 
+in vec3 position;
 in vec4 color;
 in vec3 normal;
 in vec3 texcoord;
@@ -11,6 +12,10 @@ uniform sampler3D tex;
 
 #define NUM_STEPS 100
 
+#define MIN_DISTANCE 0.05
+#define MAX_DISTANCE 10.0
+
+uniform float t;
 
 
 
@@ -20,7 +25,7 @@ uniform vec3 location;
 
 
 
-// 
+//
 // bool Voraldo::intersect_ray_bbox(vec bbox_min, vec bbox_max, vec ray_org, vec ray_dir, double &tmin, double &tmax, double t0, double t1)
 // {/*
 //  * Ray-box intersection using IEEE numerical properties to ensure that the
@@ -75,13 +80,63 @@ uniform vec3 location;
 
 
 
-bool hit(vec3 start, vec3 direction)
+
+
+// adapted from:
+//
+//    Amy Williams, Steve Barrus, R. Keith Morley, and Peter Shirley
+//    "An Efficient and Robust Ray-Box Intersection Algorithm"
+//    Journal of graphics tools, 10(1):49-54, 2005
+
+
+
+double t0 = 0;
+double t1 = 9999;
+
+double tmin, tmax; //global scope, set in hit() to tell min and max parameters
+
+bool hit(vec3 ray_org, vec3 dir)
 {
   //the bounding box is from 000 to 111
   // vec3 min = vec3(-1,-1,-1);
   vec3 min = vec3(0,0,0);
   vec3 max = vec3(1,1,1);
 
+  int sign[3];
+
+  vec3 inv_direction = vec3(1/dir.x, 1/dir.y, 1/dir.z);
+
+	sign[0] = (inv_direction[0] < 0)?1:0;
+  sign[1] = (inv_direction[1] < 0)?1:0;
+	sign[2] = (inv_direction[2] < 0)?1:0;
+
+  vec3 bbox[2] = {min,max};
+
+    tmin = (bbox[sign[0]][0] - ray_org[0]) * inv_direction[0];
+    tmax = (bbox[1-sign[0]][0] - ray_org[0]) * inv_direction[0];
+
+    double tymin = (bbox[sign[1]][1] - ray_org[1]) * inv_direction[1];
+    double tymax = (bbox[1-sign[1]][1] - ray_org[1]) * inv_direction[1];
+
+    if ( (tmin > tymax) || (tymin > tmax) )
+      return false;
+    if (tymin > tmin)
+      tmin = tymin;
+    if (tymax < tmax)
+      tmax = tymax;
+
+    double tzmin = (bbox[sign[2]][2] - ray_org[2]) * inv_direction[2];
+    double tzmax = (bbox[1-sign[2]][2] - ray_org[2]) * inv_direction[2];
+
+    if ( (tmin > tzmax) || (tzmin > tmax) )
+      return false;
+    if (tzmin > tmin)
+      tmin = tzmin;
+    if (tzmax < tmax)
+      tmax = tzmax;
+    return ( (tmin < t1) && (tmax > t0) );
+
+  return true;
 
 
 }
@@ -109,6 +164,9 @@ void main()
 
   // fcolor = vec4(1,0.3,0,1);
   fcolor = color;
+
+  if(hit(position+vec3(cos(t),sin(t),0),normal))
+    fcolor = vec4(tmax-tmin,0,1,1);
 
 
   // fcolor.xyz *= 0.2/gl_FragCoord.z;
