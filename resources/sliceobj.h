@@ -112,9 +112,9 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
 
   persp_start = points.size();
 
-  float divisions = 16.0f;
+  float divisions = 45.0f;
   float z = 0.0f;
-  float depth = 3.0f;
+  float depth = 13.0f;
 
   for(float x = -1.0f; x <= 1.0f; x += 2.0f/divisions)
     for(float y = -1.0f; y <= 1.0f; y += 2.0f/divisions)

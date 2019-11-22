@@ -46,14 +46,18 @@ void main()
 
   if(vPosition.z != 0)
   {
-    // vPosition_local.z += sin(t);
-    vPosition_local += sin(t)*vec4(vNormal,0);
+    vPosition_local.z += sin(t);
+    // vPosition_local += sin(t)*vec4(vNormal,0);
     color = vec4(0,1,0,1);
+    color.xyz *= gl_VertexID/1800.0;
   }
 
 
-  gl_Position = proj * view * vPosition_local;
-  // gl_Position = vec4(vPosition,1.0);
+  // gl_Position = proj * view * vPosition_local;
+  gl_Position = vPosition_local;
+
+
+
 
   normal = vNormal;
   texcoord = vTexCoord;
