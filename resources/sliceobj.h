@@ -93,8 +93,6 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
   // The fragcoord locations are done in (floating point type) rounded-to-the-nearest-integer
   //   pixels.
 
-  //
-
 
 
 
@@ -121,6 +119,8 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
     {
 
       z = 0;
+
+      //this scheme is a little simpler than the sphere thing I was considering
 
       if((x+1.0f/divisions) > 0)
         z += -exp(x-4);

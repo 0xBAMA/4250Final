@@ -130,7 +130,7 @@ void Scene::init()
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   // glClearColor(0.8f, 0.5f, 0.068f, 1.0f);
-   glClearColor(0.396f,0.3f,0.17f,1.0f);
+  glClearColor(0.396f,0.396f,0.4f,1.0f);
   glPointSize(6.0f);
 
   //instantiate the objects, populate all arrays

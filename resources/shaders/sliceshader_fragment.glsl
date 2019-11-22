@@ -10,7 +10,7 @@ out vec4 fcolor;
 uniform sampler3D tex;
 
 
-#define NUM_STEPS 1000
+#define NUM_STEPS 200
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -22,6 +22,21 @@ uniform float t;
 
 uniform vec2 rotation;
 uniform vec3 location;
+
+//thanks to Neil Mendoza via http://www.neilmendoza.com/glsl-rotation-about-an-arbitrary-axis/
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
 
 
 
@@ -39,17 +54,14 @@ double t1 = MAX_DISTANCE;
 
 double tmin, tmax; //global scope, set in hit() to tell min and max parameters
 
-
 vec3 gorg = vec3(0);
 vec3 gdir = vec3(0);
 
-
-
 bool hit(vec3 ray_org, vec3 dir)
 {
-  //the bounding box is from 000 to 111
-  // vec3 min = vec3(-1,-1,-1);
-  vec3 min = vec3(0,0,0);
+  //the bounding box is from 000 to 111 or maybe -1 instead of 0
+  vec3 min = vec3(-1,-1,-1);
+  // vec3 min = vec3(0,0,0);
   vec3 max = vec3(1,1,1);
 
   int sign[3];
@@ -87,10 +99,7 @@ bool hit(vec3 ray_org, vec3 dir)
   return ( (tmin < t1) && (tmax > t0) );
 
   return true;
-
-
 }
-
 
 vec4 get_color_for_pixel()
 {
@@ -102,28 +111,41 @@ vec4 get_color_for_pixel()
   vec4 new_read, old_read;
   old_read = new_read = texture(tex,gorg+current_t*gdir);
 
-
   for(int i = 0; i < NUM_STEPS; i++)
   {
     if(current_t>tmin)
     {
-      current_t -= 0.001;
+      current_t -= 0.005;
 
       old_read = new_read;
       new_read = texture(tex,gorg+current_t*gdir);
       // new_read = texture(tex,gorg+current_t*gdir+vec3(sin(0.1*t),cos(t),0));
 
-      t_color = mix(old_read,new_read,new_read.a);
+      t_color = mix(t_color,new_read,new_read.a);
     }
   }
-
   return t_color;
 }
 
-
-
 void main()
 {
+  fcolor = color;
+  fcolor = vec4(0.396,0.396,0.4,1.0);
+
+  mat4 rot = rotationMatrix(vec3(0,1,0),rotation.x) * rotationMatrix(vec3(1,0,0),rotation.y);
+
+
+  gorg = (rot * vec4(position,0)).xyz+location;
+    // mat4 rotation =       //TBD
+  // gdir = (rotation * vec4(normal,0.0)).xyz;
+  gdir = (rot * vec4(normal,0.0)).xyz;
+
+  if(hit(gorg,gdir))
+    fcolor = get_color_for_pixel();  //this assumes tmin, tmax defined
+  else
+    discard;
+
+
   // the ray origin will be determined by the location of the viewer,
   // specified in the value of location, and for each pixel a displacement
   // will be figured out using the texture coordinate
@@ -135,23 +157,11 @@ void main()
   // from the center, i.e. modeling fisheye effects.
 
 
-  // rotation =
 
 
 
 
 
-  fcolor = color;
-  fcolor = vec4(0.396,0.3,0.17,1.0);
-
-gorg = position+vec3(cos(t),sin(t),sin(0.3*t));
-// gdir = (rotation * vec4(normal,0.0)).xyz;
-gdir = normalize(vec3(normal.xy*1.3,normal.z));
-
-  if(hit(gorg,gdir))
-    fcolor = get_color_for_pixel();  //this assumes tmin, tmax defined
-  else
-    discard;
 
   // fcolor.xyz *= 0.2/gl_FragCoord.z;
 

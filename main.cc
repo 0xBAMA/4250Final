@@ -1,7 +1,5 @@
 #include "resources/scene.h"
 
-
-
 //DEBUG STUFF
 
 void GLAPIENTRY
@@ -46,6 +44,8 @@ Scene scene;
 
 //other globals (glow_balls)
 float t = 0.0;
+glm::vec3 location = glm::vec3(0,0,-2);
+glm::vec2 rotation = glm::vec2(0,0);
 
 
 //----------------------------------------------------------------------------
@@ -92,7 +92,55 @@ void keyboard(unsigned char key, int x, int y)
       glutFullScreenToggle(); //specific to freeglut
       break;
 
+
+//movement
+    case 'w':
+      location += glm::vec3(0,0,0.05);
+      break;
+
+    case 's':
+      location -= glm::vec3(0,0,0.05);
+      break;
+
     case 'a':
+      location -= glm::vec3(0.05,0,0);
+      break;
+
+    case 'd':
+      location += glm::vec3(0.05,0,0);
+      break;
+
+    case 'e':
+      location += glm::vec3(0,0.05,0);
+      break;
+
+    case 'q':
+      location -= glm::vec3(0,0.05,0);
+      break;
+
+
+//rotation
+    case 't':
+      rotation += glm::vec2(0,0.05);
+      break;
+
+    case 'y':
+      rotation -= glm::vec2(0,0.05);
+      break;
+
+    case 'g':
+      rotation += glm::vec2(0.05,0);
+      break;
+
+    case 'h':
+      rotation -= glm::vec2(0.05,0);
+      break;
+
+
+
+
+
+    case 'z':
       t+=0.01;
       break;
   }
@@ -146,7 +194,9 @@ void timer(int)
   t+=0.0001;
   glUniform1fv(glGetUniformLocation(scene.get_shader(), "t"), 1, &t);
 
+  glUniform3fv(glGetUniformLocation(scene.get_shader(), "location"), 1, glm::value_ptr(location));
 
+  glUniform2fv(glGetUniformLocation(scene.get_shader(), "rotation"), 1, glm::value_ptr(rotation));
 
 	glutPostRedisplay();
 	glutTimerFunc(1000.0/60.0, timer, 0);
