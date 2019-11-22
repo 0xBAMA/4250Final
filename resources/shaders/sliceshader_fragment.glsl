@@ -10,10 +10,10 @@ out vec4 fcolor;
 uniform sampler3D tex;
 
 
-#define NUM_STEPS 100
+#define NUM_STEPS 1000
 
-#define MIN_DISTANCE 0.05
-#define MAX_DISTANCE 10.0
+#define MIN_DISTANCE 0.0
+#define MAX_DISTANCE 1000.0
 
 uniform float t;
 
@@ -25,64 +25,8 @@ uniform vec3 location;
 
 
 
-//
-// bool Voraldo::intersect_ray_bbox(vec bbox_min, vec bbox_max, vec ray_org, vec ray_dir, double &tmin, double &tmax, double t0, double t1)
-// {/*
-//  * Ray-box intersection using IEEE numerical properties to ensure that the
-//  * test is both robust and efficient, as described in:
-//  *
-//  *      Amy Williams, Steve Barrus, R. Keith Morley, and Peter Shirley
-//  *      "An Efficient and Robust Ray-Box Intersection Algorithm"
-//  *      Journal of graphics tools, 10(1):49-54, 2005
-//  *
-//  */
-// //I pulled this code after three attempts at my own implementation didn't work
-//   vec bbox[2];
-// 	int sign[3];
-//
-// 	vec inv_direction = vec(1/ray_dir[0],1/ray_dir[1],1/ray_dir[2]);
-//
-// 	sign[0] = (inv_direction[0] < 0);
-// 	sign[1] = (inv_direction[1] < 0);
-// 	sign[2] = (inv_direction[2] < 0);
-//
-// 	bbox[0] = bbox_min;
-// 	bbox[1] = bbox_max;
-//
-//
-// 	//already declared (passed in by reference so that they can be used)
-//   tmin = (bbox[sign[0]][0] - ray_org[0]) * inv_direction[0];
-//   tmax = (bbox[1-sign[0]][0] - ray_org[0]) * inv_direction[0];
-//
-//   double tymin = (bbox[sign[1]][1] - ray_org[1]) * inv_direction[1];
-//   double tymax = (bbox[1-sign[1]][1] - ray_org[1]) * inv_direction[1];
-//
-//   if ( (tmin > tymax) || (tymin > tmax) )
-//     return false;
-//   if (tymin > tmin)
-//     tmin = tymin;
-//   if (tymax < tmax)
-//     tmax = tymax;
-//
-//   double tzmin = (bbox[sign[2]][2] - ray_org[2]) * inv_direction[2];
-//   double tzmax = (bbox[1-sign[2]][2] - ray_org[2]) * inv_direction[2];
-//
-//   if ( (tmin > tzmax) || (tzmin > tmax) )
-//     return false;
-//   if (tzmin > tmin)
-//     tmin = tzmin;
-//   if (tzmax < tmax)
-//     tmax = tzmax;
-//   return ( (tmin < t1) && (tmax > t0) );
-//
-// }
 
-
-
-
-
-
-// adapted from:
+// hit() code adapted from:
 //
 //    Amy Williams, Steve Barrus, R. Keith Morley, and Peter Shirley
 //    "An Efficient and Robust Ray-Box Intersection Algorithm"
@@ -90,10 +34,16 @@ uniform vec3 location;
 
 
 
-double t0 = 0;
-double t1 = 9999;
+double t0 = MIN_DISTANCE;
+double t1 = MAX_DISTANCE;
 
 double tmin, tmax; //global scope, set in hit() to tell min and max parameters
+
+
+vec3 gorg = vec3(0);
+vec3 gdir = vec3(0);
+
+
 
 bool hit(vec3 ray_org, vec3 dir)
 {
@@ -112,33 +62,62 @@ bool hit(vec3 ray_org, vec3 dir)
 
   vec3 bbox[2] = {min,max};
 
-    tmin = (bbox[sign[0]][0] - ray_org[0]) * inv_direction[0];
-    tmax = (bbox[1-sign[0]][0] - ray_org[0]) * inv_direction[0];
+  tmin = (bbox[sign[0]][0] - ray_org[0]) * inv_direction[0];
+  tmax = (bbox[1-sign[0]][0] - ray_org[0]) * inv_direction[0];
 
-    double tymin = (bbox[sign[1]][1] - ray_org[1]) * inv_direction[1];
-    double tymax = (bbox[1-sign[1]][1] - ray_org[1]) * inv_direction[1];
+  double tymin = (bbox[sign[1]][1] - ray_org[1]) * inv_direction[1];
+  double tymax = (bbox[1-sign[1]][1] - ray_org[1]) * inv_direction[1];
 
-    if ( (tmin > tymax) || (tymin > tmax) )
-      return false;
-    if (tymin > tmin)
-      tmin = tymin;
-    if (tymax < tmax)
-      tmax = tymax;
+  if ( (tmin > tymax) || (tymin > tmax) )
+    return false;
+  if (tymin > tmin)
+    tmin = tymin;
+  if (tymax < tmax)
+    tmax = tymax;
 
-    double tzmin = (bbox[sign[2]][2] - ray_org[2]) * inv_direction[2];
-    double tzmax = (bbox[1-sign[2]][2] - ray_org[2]) * inv_direction[2];
+  double tzmin = (bbox[sign[2]][2] - ray_org[2]) * inv_direction[2];
+  double tzmax = (bbox[1-sign[2]][2] - ray_org[2]) * inv_direction[2];
 
-    if ( (tmin > tzmax) || (tzmin > tmax) )
-      return false;
-    if (tzmin > tmin)
-      tmin = tzmin;
-    if (tzmax < tmax)
-      tmax = tzmax;
-    return ( (tmin < t1) && (tmax > t0) );
+  if ( (tmin > tzmax) || (tzmin > tmax) )
+    return false;
+  if (tzmin > tmin)
+    tmin = tzmin;
+  if (tzmax < tmax)
+    tmax = tzmax;
+  return ( (tmin < t1) && (tmax > t0) );
 
   return true;
 
 
+}
+
+
+vec4 get_color_for_pixel()
+{
+  // return vec4(tmax-tmin,0,1,1);
+
+  float current_t = float(tmax); //start at the farthest point into the texture
+  vec4 t_color = vec4(0);
+
+  vec4 new_read, old_read;
+  old_read = new_read = texture(tex,gorg+current_t*gdir);
+
+
+  for(int i = 0; i < NUM_STEPS; i++)
+  {
+    if(current_t>tmin)
+    {
+      current_t -= 0.001;
+
+      old_read = new_read;
+      new_read = texture(tex,gorg+current_t*gdir);
+      // new_read = texture(tex,gorg+current_t*gdir+vec3(sin(0.1*t),cos(t),0));
+
+      t_color = mix(old_read,new_read,new_read.a);
+    }
+  }
+
+  return t_color;
 }
 
 
@@ -156,18 +135,23 @@ void main()
   // from the center, i.e. modeling fisheye effects.
 
 
+  // rotation =
 
 
 
 
 
-
-  // fcolor = vec4(1,0.3,0,1);
   fcolor = color;
+  fcolor = vec4(0.396,0.3,0.17,1.0);
 
-  if(hit(position+vec3(cos(t),sin(t),0),normal))
-    fcolor = vec4(tmax-tmin,0,1,1);
+gorg = position+vec3(cos(t),sin(t),sin(0.3*t));
+// gdir = (rotation * vec4(normal,0.0)).xyz;
+gdir = normalize(vec3(normal.xy*1.3,normal.z));
 
+  if(hit(gorg,gdir))
+    fcolor = get_color_for_pixel();  //this assumes tmin, tmax defined
+  else
+    discard;
 
   // fcolor.xyz *= 0.2/gl_FragCoord.z;
 
