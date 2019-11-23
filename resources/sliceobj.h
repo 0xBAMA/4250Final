@@ -197,8 +197,8 @@ void sliceobj::init(std::vector<glm::vec3> &points, std::vector<glm::vec3> &norm
 
 void sliceobj::draw()
 {
-  // glDrawArrays(GL_TRIANGLES, ortho_start, ortho_num);
-  glDrawArrays(GL_TRIANGLES, persp_start, persp_num);
+  glDrawArrays(GL_TRIANGLES, ortho_start, ortho_num);
+  // glDrawArrays(GL_TRIANGLES, persp_start, persp_num);
 }
 
 //----------------------------------------------------------------------------

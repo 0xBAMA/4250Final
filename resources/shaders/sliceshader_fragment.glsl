@@ -8,9 +8,12 @@ in vec3 texcoord;
 out vec4 fcolor;
 
 uniform sampler3D tex;
+uniform float scale;
 
 
-#define NUM_STEPS 600
+#define NUM_STEPS 1000
+
+
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -106,16 +109,16 @@ vec4 get_color_for_pixel()
   // return vec4(tmax-tmin,0,1,1);
 
   float current_t = float(tmax); //start at the farthest point into the texture
-  vec4 t_color = vec4(0);
+  vec4 t_color = vec4(0.396,0.396,0.4,1.0);
 
   vec4 new_read, old_read;
   old_read = new_read = texture(tex,gorg+current_t*gdir);
 
   for(int i = 0; i < NUM_STEPS; i++)
   {
-    if(current_t>tmin)
+    if(current_t>=tmin)
     {
-      current_t -= 0.003;
+      current_t -= 0.001;
 
       old_read = new_read;
       new_read = texture(tex,gorg+current_t*gdir);
@@ -125,6 +128,10 @@ vec4 get_color_for_pixel()
       // it's a over b, where a is the new sample and b is the current color, t_color
       t_color.rgb = new_read.rgb * new_read.a + t_color.rgb * t_color.a * ( 1 - new_read.a );
       t_color.a = new_read.a + t_color.a * ( 1 - new_read.a );
+
+    }
+    else
+    {
 
     }
   }
@@ -139,7 +146,7 @@ void main()
   mat4 rot = rotationMatrix(vec3(0,1,0),rotation.x) * rotationMatrix(vec3(1,0,0),rotation.y);
 
 
-  gorg = (rot * vec4(position,0)).xyz+location;
+  gorg = (rot * vec4(scale * position,0)).xyz+location;
   gdir = (rot * vec4(normal,0.0)).xyz;
 
   if(hit(gorg,gdir))

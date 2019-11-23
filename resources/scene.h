@@ -6,14 +6,15 @@
 
 
 
+// #define TEX_PATH "resources/textures/models/ambient occlusion visualized.png"
 // #define TEX_PATH "resources/textures/models/save.png"              //CASTLE
 // #define TEX_PATH "resources/textures/models/heads with black.png"  //MRI data with a contrasting background (only useful in slice view)
 // #define TEX_PATH "resources/textures/models/heads.png"             //MRI data with no contrasting background added
 // #define TEX_PATH "resources/textures/models/save-copy2.png"        //perlin noise with tube cutout
 // #define TEX_PATH "resources/textures/models/save-copy3.png"        //trees with purple centers
-#define TEX_PATH "resources/textures/models/save-copy4.png"        //trees with purple centers, different spacing
+// #define TEX_PATH "resources/textures/models/save-copy4.png"        //trees with purple centers, different spacing
 // #define TEX_PATH "resources/textures/models/save-copy5.png"        //trees with clouds
-// #define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
+#define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
 // #define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
 // #define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
 // #define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
@@ -45,7 +46,6 @@
 // #define TEX_PATH "resources/textures/models/save-copy8.png"    //yellow shell in noise
 // #define TEX_PATH "resources/textures/models/save-copy11.png"   //octaves but weird
 // #define TEX_PATH "resources/textures/models/save-copy12.png"   //same as previous
-// #define TEX_PATH "resources/textures/models/ambient occlusion visualized.png"
 // #define TEX_PATH "resources/textures/models/bigass.png"        //texture made in gimp with gradients
 // #define TEX_PATH "resources/textures/models/palette test.png"
 // #define TEX_PATH "resources/textures/models/save-copy14.png"   //pink aura
@@ -189,8 +189,12 @@ void Scene::gpu_setup()
     // This one looks the best - other options are GL_LINEAR, GL_NEAREST, then the mipmap ones
       //mag filter  can be either nearest or linear
       //min filter can be use the mipmap ones
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
     glBindTexture(GL_TEXTURE_3D, texture);
@@ -210,10 +214,10 @@ void Scene::gpu_setup()
   glGenBuffers( 1, &buffer );
   glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-  const GLuint num_bytes_points = sizeof(glm::vec3) * points.size();
+  const GLuint num_bytes_points    = sizeof(glm::vec3) * points.size();
   const GLuint num_bytes_texcoords = sizeof(glm::vec3) * texcoords.size();
-  const GLuint num_bytes_normals = sizeof(glm::vec3) * normals.size();
-  const GLuint num_bytes_colors = sizeof(glm::vec4) * colors.size();
+  const GLuint num_bytes_normals   = sizeof(glm::vec3) * normals.size();
+  const GLuint num_bytes_colors    = sizeof(glm::vec4) * colors.size();
 
   GLint num_bytes = num_bytes_points + num_bytes_texcoords + num_bytes_normals + num_bytes_colors;
 
@@ -261,6 +265,10 @@ void Scene::gpu_setup()
   glm::mat4 view = JonDefault::view;
 
   glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+  float scale = 1.0f;
+
+  glUniform1fv(glGetUniformLocation(shader, "scale"), 1, &scale);
 
 }
 
