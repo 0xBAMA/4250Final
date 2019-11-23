@@ -10,7 +10,7 @@ out vec4 fcolor;
 uniform sampler3D tex;
 
 
-#define NUM_STEPS 200
+#define NUM_STEPS 600
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -60,8 +60,8 @@ vec3 gdir = vec3(0);
 bool hit(vec3 ray_org, vec3 dir)
 {
   //the bounding box is from 000 to 111 or maybe -1 instead of 0
-  vec3 min = vec3(-1,-1,-1);
-  // vec3 min = vec3(0,0,0);
+  // vec3 min = vec3(-1,-1,-1);
+  vec3 min = vec3(0,0,0);
   vec3 max = vec3(1,1,1);
 
   int sign[3];

@@ -14,8 +14,8 @@
 // #define TEX_PATH "resources/textures/models/save-copy4.png"        //trees with purple centers, different spacing
 // #define TEX_PATH "resources/textures/models/save-copy5.png"        //trees with clouds
 // #define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
-// #define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
-#define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
+#define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
+// #define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
 // #define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better

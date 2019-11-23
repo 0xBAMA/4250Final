@@ -44,7 +44,7 @@ Scene scene;
 
 //other globals (glow_balls)
 float t = 0.0;
-glm::vec3 location = glm::vec3(0,0,-2);
+glm::vec3 location = glm::vec3(0.5,0.5,-4);
 glm::vec2 rotation = glm::vec2(0,0);
 
 
