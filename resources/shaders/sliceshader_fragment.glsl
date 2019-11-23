@@ -115,13 +115,17 @@ vec4 get_color_for_pixel()
   {
     if(current_t>tmin)
     {
-      current_t -= 0.005;
+      current_t -= 0.003;
 
       old_read = new_read;
       new_read = texture(tex,gorg+current_t*gdir);
-      // new_read = texture(tex,gorg+current_t*gdir+vec3(sin(0.1*t),cos(t),0));
 
-      t_color = mix(t_color,new_read,new_read.a);
+      // t_color = mix(t_color,new_read,new_read.a);   //this is not the correct way to calculate this
+
+      // it's a over b, where a is the new sample and b is the current color, t_color
+      t_color.rgb = new_read.rgb * new_read.a + t_color.rgb * t_color.a * ( 1 - new_read.a );
+      t_color.a = new_read.a + t_color.a * ( 1 - new_read.a );
+
     }
   }
   return t_color;
