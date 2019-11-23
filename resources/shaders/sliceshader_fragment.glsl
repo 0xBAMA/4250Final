@@ -13,8 +13,6 @@ uniform float scale;
 
 #define NUM_STEPS 1000
 
-
-
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
 
@@ -164,15 +162,6 @@ void main()
   // projection - another thing to consider is you might scale the contribution
   // of left and right based on the squared distance of the pixel's xy value
   // from the center, i.e. modeling fisheye effects.
-
-
-
-
-
-
-
-
-  // fcolor.xyz *= 0.2/gl_FragCoord.z;
 
 
 }
