@@ -136,8 +136,6 @@ void main()
 
 
   gorg = (rot * vec4(position,0)).xyz+location;
-    // mat4 rotation =       //TBD
-  // gdir = (rotation * vec4(normal,0.0)).xyz;
   gdir = (rot * vec4(normal,0.0)).xyz;
 
   if(hit(gorg,gdir))
