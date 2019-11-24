@@ -11,7 +11,7 @@ uniform sampler3D tex;
 uniform float scale;
 
 
-#define NUM_STEPS 1000
+#define NUM_STEPS 2000
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -109,17 +109,25 @@ vec4 get_color_for_pixel()
   float current_t = float(tmax); //start at the farthest point into the texture
   vec4 t_color = vec4(0.396,0.396,0.4,1.0);
 
+
+  float texture_scale = 5.0f; //need to add a uniform
+  vec3 texture_offset = vec3(0);  //uniform for this too - keyboard controls, then think about methods for slices
+
+
+
   vec4 new_read, old_read;
-  old_read = new_read = texture(tex,gorg+current_t*gdir);
+
+  //more consistent behavior inside the parentheses, I think
+  old_read = new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset));
 
   for(int i = 0; i < NUM_STEPS; i++)
   {
     if(current_t>=tmin)
     {
-      current_t -= 0.001;
+      current_t -= 0.002;
 
       old_read = new_read;
-      new_read = texture(tex,gorg+current_t*gdir);
+      new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset));
 
       // t_color = mix(t_color,new_read,new_read.a);   //this is not the correct way to calculate this
 

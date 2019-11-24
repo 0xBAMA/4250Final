@@ -204,7 +204,7 @@ void timer(int)
   glUniform1fv(glGetUniformLocation(scene.get_shader(), "t"), 1, &t);
 
 
-  location = glm::vec3(0.5,0.5,0.5) + glm::vec3(3*cos(t), yoffset, 3*sin(t));
+  location = glm::vec3(0.5,0.5,0.5) + glm::vec3(5*cos(t), yoffset, 5*sin(t));
   rotation = glm::vec2(0,0) + glm::vec2(t+JonDefault::twopi/4,tilt);
 
 
