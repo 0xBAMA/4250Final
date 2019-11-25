@@ -28,10 +28,14 @@
 // #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
 // #define TEX_PATH "resources/textures/models/save1.png"             //star trek equipment
 // #define TEX_PATH "resources/textures/models/new.png"               //ico
-#define TEX_PATH "resources/textures/models/new2.png"             //ico
 // #define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 
 
+// #define TEX_PATH "resources/textures/models/new2.png"             //ico
+// #define TEX_PATH "resources/textures/models/new3.png"             //ico
+// #define TEX_PATH "resources/textures/models/new4.png"             //ico
+// #define TEX_PATH "resources/textures/models/new5.png"             //ico
+#define TEX_PATH "resources/textures/models/new6.png"             //ico
 
 
 

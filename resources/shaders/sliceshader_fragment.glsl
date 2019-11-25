@@ -114,7 +114,7 @@ vec4 get_color_for_pixel()
   if(step < 0.001) step = 0.001;
 
 
-  float texture_scale = 5.0f; //need to add a uniform
+  float texture_scale = 2.0f; //need to add a uniform
   vec3 texture_offset = vec3(0);  //uniform for this too - keyboard controls, then think about methods for slices
 
 
