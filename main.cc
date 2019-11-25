@@ -80,13 +80,13 @@ void keyboard(unsigned char key, int x, int y)
 
 
     case '=':   //+
-      scale *= 0.99;
+      scale *= 0.9;
       glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
       cout << scale << endl;
       break;
 
     case '-':   //-
-      scale /= 0.99;
+      scale /= 0.9;
       glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
       cout << scale << endl;
       break;
@@ -117,32 +117,32 @@ void keyboard(unsigned char key, int x, int y)
 
     case 'e':
       // location += glm::vec3(0,0.05,0);
-      yoffset += 0.05;
+      yoffset += 0.1;
       break;
 
     case 'q':
-      // location -= glm::vec3(0,0.05,0);
-      yoffset -= 0.05;
+      // location -= glm::vec3(0,0.1,0);
+      yoffset -= 0.1;
       break;
 
 
 //rotation
     case 't':
-      // rotation += glm::vec2(0,0.05);
-      tilt += 0.05;
+      // rotation += glm::vec2(0,0.1);
+      tilt += 0.1;
       break;
 
     case 'y':
-      // rotation -= glm::vec2(0,0.05);
-      tilt -= 0.05;
+      // rotation -= glm::vec2(0,0.1);
+      tilt -= 0.1;
       break;
 
     // case 'g':
-    //   rotation += glm::vec2(0.05,0);
+    //   rotation += glm::vec2(0.1,0);
     //   break;
     //
     // case 'h':
-    //   rotation -= glm::vec2(0.05,0);
+    //   rotation -= glm::vec2(0.1,0);
     //   break;
 
 
@@ -173,12 +173,12 @@ void keyboard(unsigned char key, int x, int y)
 
 
     case 'z':
-      t+=0.01;
+      t+=0.08;
       break;
 
     case 'x':
-      yoffset = 2.0f;
-      tilt = -0.4f;
+      // yoffset = 2.0f;  tilt = -0.4f;
+      yoffset = 1.7f;  tilt = -0.3f;
       break;
   }
 

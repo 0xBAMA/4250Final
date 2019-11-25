@@ -27,7 +27,9 @@
 // #define TEX_PATH "resources/textures/models/save-copy26.png"       //bars and rose
 // #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
 // #define TEX_PATH "resources/textures/models/save1.png"             //star trek equipment
-
+// #define TEX_PATH "resources/textures/models/new.png"               //ico
+#define TEX_PATH "resources/textures/models/new2.png"             //ico
+// #define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 
 
 
@@ -48,7 +50,6 @@
 // #define TEX_PATH "resources/textures/models/palette test.png"
 // #define TEX_PATH "resources/textures/models/save-copy14.png"   //pink aura
 // #define TEX_PATH "resources/textures/models/save-copy23.png"   //very dark
-#define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 // #define TEX_PATH "resources/textures/models/save-copy28.png"   //happy birthday text
 
 
