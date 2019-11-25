@@ -149,8 +149,36 @@ void keyboard(unsigned char key, int x, int y)
 
 
 
+
+
+
+
+
+
+    case ',':
+      glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+      glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      break;
+
+    case '.':
+      glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      break;
+
+
+
+
+
+
+
+
     case 'z':
       t+=0.01;
+      break;
+
+    case 'x':
+      yoffset = 2.0f;
+      tilt = -0.4f;
       break;
   }
 

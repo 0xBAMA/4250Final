@@ -11,7 +11,8 @@ uniform sampler3D tex;
 uniform float scale;
 
 
-#define NUM_STEPS 2000
+// #define NUM_STEPS 2000
+#define NUM_STEPS 1000
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -108,6 +109,9 @@ vec4 get_color_for_pixel()
 
   float current_t = float(tmax); //start at the farthest point into the texture
   vec4 t_color = vec4(0.396,0.396,0.4,1.0);
+  float step = float((tmax-tmin))/NUM_STEPS;
+
+  if(step < 0.001) step = 0.001;
 
 
   float texture_scale = 5.0f; //need to add a uniform
@@ -124,7 +128,7 @@ vec4 get_color_for_pixel()
   {
     if(current_t>=tmin)
     {
-      current_t -= 0.002;
+      current_t -= step;
 
       old_read = new_read;
       new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset));

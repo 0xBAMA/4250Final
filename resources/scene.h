@@ -2,8 +2,6 @@
 #include "sliceobj.h"
 
 
-//some pictures
-// https://imgur.com/a/GDfRQKV
 
 
 // #define TEX_PATH "resources/textures/models/ambient occlusion visualized.png"
@@ -21,7 +19,7 @@
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
-#define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
+// #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
 // #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
 // #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
@@ -50,6 +48,7 @@
 // #define TEX_PATH "resources/textures/models/palette test.png"
 // #define TEX_PATH "resources/textures/models/save-copy14.png"   //pink aura
 // #define TEX_PATH "resources/textures/models/save-copy23.png"   //very dark
+#define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 // #define TEX_PATH "resources/textures/models/save-copy28.png"   //happy birthday text
 
 
