@@ -12,7 +12,7 @@ uniform float scale;
 
 
 // #define NUM_STEPS 2000
-#define NUM_STEPS 1000
+#define NUM_STEPS 600
 
 #define MIN_DISTANCE 0.0
 #define MAX_DISTANCE 1000.0
@@ -114,7 +114,10 @@ vec4 get_color_for_pixel()
   if(step < 0.001) step = 0.001;
 
 
-  float texture_scale = 2.0f; //need to add a uniform
+
+  float uniform_scale = 3;
+
+  vec3 texture_scale = uniform_scale * vec3(0.5,1.0,1.0); //need to add a uniform
   vec3 texture_offset = vec3(0);  //uniform for this too - keyboard controls, then think about methods for slices
 
 

@@ -178,7 +178,7 @@ void keyboard(unsigned char key, int x, int y)
 
     case 'x':
       // yoffset = 2.0f;  tilt = -0.4f;
-      yoffset = 1.7f;  tilt = -0.3f;
+      yoffset = 1.55f;  tilt = -0.3f;
       break;
   }
 

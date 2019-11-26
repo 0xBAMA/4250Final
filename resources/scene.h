@@ -26,16 +26,20 @@
 // #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
 // #define TEX_PATH "resources/textures/models/save-copy26.png"       //bars and rose
 // #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
+#define TEX_PATH "resources/textures/models/chain.png"             //chain
 // #define TEX_PATH "resources/textures/models/save1.png"             //star trek equipment
-// #define TEX_PATH "resources/textures/models/new.png"               //ico
 // #define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 
-
+// #define TEX_PATH "resources/textures/models/new.png"               //ico
 // #define TEX_PATH "resources/textures/models/new2.png"             //ico
 // #define TEX_PATH "resources/textures/models/new3.png"             //ico
 // #define TEX_PATH "resources/textures/models/new4.png"             //ico
 // #define TEX_PATH "resources/textures/models/new5.png"             //ico
-#define TEX_PATH "resources/textures/models/new6.png"             //ico
+// #define TEX_PATH "resources/textures/models/new6.png"             //ico
+// #define TEX_PATH "resources/textures/models/new7.png"             //ico
+// #define TEX_PATH "resources/textures/models/new8.png"             //ico
+// #define TEX_PATH "resources/textures/models/new9.png"             //ico
+// #define TEX_PATH "resources/textures/models/new10.png"             //ico
 
 
 

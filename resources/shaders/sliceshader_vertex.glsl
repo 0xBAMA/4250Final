@@ -55,7 +55,17 @@ void main()
 
 
   gl_Position = vPosition_local;
+
   position=gl_Position.xyz;
+
+  // position.x *= 1.980;
+  // position.y *= 1.080;
+
+
+  position.x *= 1.366;
+  position.y *= 0.768;
+
+
 
   // gl_Position = proj * view * vPosition_local;
 
