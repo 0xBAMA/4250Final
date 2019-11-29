@@ -47,8 +47,14 @@ float t = 0.0;
 float tilt = 0.0;
 float yoffset = 0.0;
 
+float texture_scale = 1.0;
+
+
 glm::vec3 location = glm::vec3(0.5,0.5,-4);
 glm::vec2 rotation = glm::vec2(0,0);
+
+
+glm::vec3 texture_offset = glm::vec3(0,0,0);
 
 
 //----------------------------------------------------------------------------
@@ -98,32 +104,60 @@ void keyboard(unsigned char key, int x, int y)
       break;
 
 
+
+
 //movement
-    // case 'w':
-    //   location += glm::vec3(0,0,0.05);
-    //   break;
-    //
-    // case 's':
-    //   location -= glm::vec3(0,0,0.05);
-    //   break;
-    //
-    // case 'a':
-    //   location -= glm::vec3(0.05,0,0);
-    //   break;
-    //
-    // case 'd':
-    //   location += glm::vec3(0.05,0,0);
-    //   break;
+    case 'w':
+      texture_offset += glm::vec3(0.005,0,0);
+      break;
+
+    case 's':
+      texture_offset -= glm::vec3(0.005,0,0);
+      break;
+
+    case 'a':
+      texture_offset += glm::vec3(0,0.005,0);
+      break;
+
+    case 'd':
+      texture_offset -= glm::vec3(0,0.005,0);
+      break;
+
+    case 'q':
+      texture_offset += glm::vec3(0,0,0.005);
+      break;
 
     case 'e':
+      texture_offset -= glm::vec3(0,0,0.005);
+      break;
+
+
+
+    case 'c':
+      texture_scale*=0.9;
+      glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
+      break;
+
+    case 'v':
+      texture_scale/=0.9;
+      glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
+      break;
+
+
+
+
+
+    case 'u':
       // location += glm::vec3(0,0.05,0);
       yoffset += 0.1;
       break;
 
-    case 'q':
+    case 'i':
       // location -= glm::vec3(0,0.1,0);
       yoffset -= 0.1;
       break;
+
+
 
 
 //rotation
@@ -136,16 +170,6 @@ void keyboard(unsigned char key, int x, int y)
       // rotation -= glm::vec2(0,0.1);
       tilt -= 0.1;
       break;
-
-    // case 'g':
-    //   rotation += glm::vec2(0.1,0);
-    //   break;
-    //
-    // case 'h':
-    //   rotation -= glm::vec2(0.1,0);
-    //   break;
-
-
 
 
 
@@ -240,6 +264,8 @@ void timer(int)
 
   glUniform3fv(glGetUniformLocation(scene.get_shader(), "location"), 1, glm::value_ptr(location));
   glUniform2fv(glGetUniformLocation(scene.get_shader(), "rotation"), 1, glm::value_ptr(rotation));
+  glUniform3fv(glGetUniformLocation(scene.get_shader(), "texture_offset"), 1, glm::value_ptr(texture_offset));
+
 
 	glutPostRedisplay();
 	glutTimerFunc(1000.0/60.0, timer, 0);

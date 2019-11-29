@@ -19,17 +19,18 @@
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
-// #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
+#define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
 // #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
 // #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
 // #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
 // #define TEX_PATH "resources/textures/models/save-copy26.png"       //bars and rose
 // #define TEX_PATH "resources/textures/models/save-copy27.png"       //icosahedron wierdness
-#define TEX_PATH "resources/textures/models/chain.png"             //chain
 // #define TEX_PATH "resources/textures/models/save1.png"             //star trek equipment
 // #define TEX_PATH "resources/textures/models/save-copy23-L.png"   //very dark
 
+
+//the following were made on 11/25/2019 with V07
 // #define TEX_PATH "resources/textures/models/new.png"               //ico
 // #define TEX_PATH "resources/textures/models/new2.png"             //ico
 // #define TEX_PATH "resources/textures/models/new3.png"             //ico
@@ -40,6 +41,10 @@
 // #define TEX_PATH "resources/textures/models/new8.png"             //ico
 // #define TEX_PATH "resources/textures/models/new9.png"             //ico
 // #define TEX_PATH "resources/textures/models/new10.png"             //ico
+// #define TEX_PATH "resources/textures/models/new11.png"             //ico
+// #define TEX_PATH "resources/textures/models/new12.png"             //ico
+// #define TEX_PATH "resources/textures/models/chain.png"             //chain
+// #define TEX_PATH "resources/textures/models/new13.png"             //ico
 
 
 

@@ -11,6 +11,12 @@ uniform sampler3D tex;
 uniform float scale;
 
 
+uniform vec3 texture_offset;
+uniform float uniform_scale;
+
+
+
+
 // #define NUM_STEPS 2000
 #define NUM_STEPS 600
 
@@ -115,10 +121,8 @@ vec4 get_color_for_pixel()
 
 
 
-  float uniform_scale = 3;
 
   vec3 texture_scale = uniform_scale * vec3(0.5,1.0,1.0); //need to add a uniform
-  vec3 texture_offset = vec3(0);  //uniform for this too - keyboard controls, then think about methods for slices
 
 
 
@@ -153,6 +157,7 @@ vec4 get_color_for_pixel()
 
 void main()
 {
+
   fcolor = color;
   fcolor = vec4(0.396,0.396,0.4,1.0);
 
