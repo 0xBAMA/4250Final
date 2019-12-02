@@ -70,7 +70,12 @@
 // #define TEX_PATH "resources/textures/models/graph19.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph20.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph21.png"             //graphs
-#define TEX_PATH "resources/textures/models/graph22.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph22.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph23.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph24.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph25.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph26.png"             //graphs
+#define TEX_PATH "resources/textures/models/graph27.png"             //graphs
 
 
 
