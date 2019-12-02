@@ -265,6 +265,7 @@ void timer(int)
   glUniform3fv(glGetUniformLocation(scene.get_shader(), "location"), 1, glm::value_ptr(location));
   glUniform2fv(glGetUniformLocation(scene.get_shader(), "rotation"), 1, glm::value_ptr(rotation));
   glUniform3fv(glGetUniformLocation(scene.get_shader(), "texture_offset"), 1, glm::value_ptr(texture_offset));
+  glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
 
 
 	glutPostRedisplay();
@@ -290,8 +291,8 @@ int main(int argc, char **argv)
 
 
   glutInit(&argc, argv);
-  // glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);  //doesn't look as good
-  glutInitDisplayMode(GLUT_MULTISAMPLE | GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);  //doesn't look as good
+  // glutInitDisplayMode(GLUT_MULTISAMPLE | GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
   glutInitContextVersion( 4, 5 );
 	glutInitContextProfile( GLUT_CORE_PROFILE );

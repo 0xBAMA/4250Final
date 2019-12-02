@@ -19,7 +19,7 @@
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
-#define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
+// #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
 // #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
 // #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
@@ -45,8 +45,20 @@
 // #define TEX_PATH "resources/textures/models/new12.png"             //ico
 // #define TEX_PATH "resources/textures/models/chain.png"             //chain
 // #define TEX_PATH "resources/textures/models/new13.png"             //ico
+// #define TEX_PATH "resources/textures/models/new14.png"             //ico
 
-
+//GRAPHS - 12/1
+// #define TEX_PATH "resources/textures/models/graph0.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph1.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph2.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph3.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph4.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph5.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph6.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph7.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph8.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph9.png"             //graphs
+#define TEX_PATH "resources/textures/models/graph10.png"             //graphs
 
 
 

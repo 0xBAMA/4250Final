@@ -58,12 +58,16 @@ void main()
 
   position=gl_Position.xyz;
 
-  // position.x *= 1.980;
-  // position.y *= 1.080;
 
 
   position.x *= 1.366;
   position.y *= 0.768;
+
+
+
+  // position.x *= 1.080;
+  // position.y *= 1.920;
+
 
 
 
