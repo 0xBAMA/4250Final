@@ -47,7 +47,7 @@
 // #define TEX_PATH "resources/textures/models/new13.png"             //ico
 // #define TEX_PATH "resources/textures/models/new14.png"             //ico
 
-//GRAPHS - 12/1
+//GRAPHS - 12/1 - 12/2 - made using V07 and some code to do prim's algorithm on graphs
 // #define TEX_PATH "resources/textures/models/graph0.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph1.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph2.png"             //graphs
@@ -63,7 +63,14 @@
 // #define TEX_PATH "resources/textures/models/graph12.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph13.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph14.png"             //graphs
-#define TEX_PATH "resources/textures/models/graph15.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph15.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph16.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph17.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph18.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph19.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph20.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph21.png"             //graphs
+#define TEX_PATH "resources/textures/models/graph22.png"             //graphs
 
 
 
