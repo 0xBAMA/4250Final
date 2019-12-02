@@ -75,7 +75,14 @@
 // #define TEX_PATH "resources/textures/models/graph24.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph25.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph26.png"             //graphs
-#define TEX_PATH "resources/textures/models/graph27.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph27.png"             //graphs
+
+
+//space extension of the graph project 12/2
+// #define TEX_PATH "resources/textures/models/space0.png"             //space
+// #define TEX_PATH "resources/textures/models/space1.png"             //space
+#define TEX_PATH "resources/textures/models/space2.png"             //space
+
 
 
 
