@@ -58,7 +58,12 @@
 // #define TEX_PATH "resources/textures/models/graph7.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph8.png"             //graphs
 // #define TEX_PATH "resources/textures/models/graph9.png"             //graphs
-#define TEX_PATH "resources/textures/models/graph10.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph10.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph11.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph12.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph13.png"             //graphs
+// #define TEX_PATH "resources/textures/models/graph14.png"             //graphs
+#define TEX_PATH "resources/textures/models/graph15.png"             //graphs
 
 
 
