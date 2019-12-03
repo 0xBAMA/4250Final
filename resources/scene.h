@@ -81,7 +81,8 @@
 //space extension of the graph project 12/2
 // #define TEX_PATH "resources/textures/models/space0.png"             //space
 // #define TEX_PATH "resources/textures/models/space1.png"             //space
-#define TEX_PATH "resources/textures/models/space2.png"             //space
+// #define TEX_PATH "resources/textures/models/space2.png"             //space
+#define TEX_PATH "resources/textures/models/space3.png"             //space
 
 
 
