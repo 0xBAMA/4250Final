@@ -7,7 +7,8 @@ in vec3 texcoord;
 
 out vec4 fcolor;
 
-uniform sampler3D tex;
+// uniform sampler3D tex;
+uniform layout(rgba8) image3D tex;
 uniform float scale;
 
 
@@ -122,14 +123,26 @@ vec4 get_color_for_pixel()
 
 
 
-  vec3 texture_scale = uniform_scale * vec3(0.5,1.0,1.0); //need to add a uniform
+  vec3 texture_scale = uniform_scale * vec3(0.5,1.0,1.0);
 
 
 
   vec4 new_read, old_read;
 
-  //more consistent behavior inside the parentheses, I think
-  old_read = new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset));
+  // old_read = new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
+
+  //----------------------------------------------------------------------------
+
+  int sx, sy, sz;
+
+  sx = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
+  sy = int(imageSize(tex).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
+  sz = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
+
+  ivec3 samp = ivec3(sx, sy, sz);
+  old_read = new_read = imageLoad(tex,samp);  //this is with the image
+
+  //----------------------------------------------------------------------------
 
   for(int i = 0; i < NUM_STEPS; i++)
   {
@@ -138,9 +151,21 @@ vec4 get_color_for_pixel()
       current_t -= step;
 
       old_read = new_read;
-      new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset));
 
-      // t_color = mix(t_color,new_read,new_read.a);   //this is not the correct way to calculate this
+
+      // new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
+
+      //----------------------------------------------------------------------------
+
+      sx = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
+      sy = int(imageSize(tex).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
+      sz = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
+
+      samp = ivec3(sx, sy, sz);
+      new_read = imageLoad(tex,samp); //this is with the image
+
+      //----------------------------------------------------------------------------
+
 
       // it's a over b, where a is the new sample and b is the current color, t_color
       t_color.rgb = new_read.rgb * new_read.a + t_color.rgb * t_color.a * ( 1 - new_read.a );

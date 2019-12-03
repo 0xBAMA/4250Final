@@ -20,7 +20,7 @@
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
 // #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
-// #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
+#define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
 // #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
 // #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
@@ -79,10 +79,13 @@
 
 
 //space extension of the graph project 12/2
-// #define TEX_PATH "resources/textures/models/space0.png"             //space
+// #define TEX_PATH "resources/textures/models/space0.png"             //space - low visibility
 // #define TEX_PATH "resources/textures/models/space1.png"             //space
 // #define TEX_PATH "resources/textures/models/space2.png"             //space
-#define TEX_PATH "resources/textures/models/space3.png"             //space
+// #define TEX_PATH "resources/textures/models/space3.png"             //space
+// #define TEX_PATH "resources/textures/models/space4.png"             //space
+// #define TEX_PATH "resources/textures/models/space5.png"             //space
+// #define TEX_PATH "resources/textures/models/space6.png"             //space
 
 
 
@@ -227,7 +230,18 @@ void Scene::gpu_setup()
   {
     cout << endl << "texture loaded" << endl;
     cout << "  the size of the 3d texture image is " << image_data.size() << " bytes";
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
+
+
+    //THIS IS WHAT I HAD BEFORE - apparently, it allocates storage in the background
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
+
+    //THIS IS FOR THE NEW ONE
+    // glTexStorage3D(GL_TEXTURE_3D, 1, GL_RGBA8, 512, 256, 256);
+    // glTexSubImage3D(GL_TEXTURE_3D, texture, 0, 0, 0, 0, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
+    //
+
+
+
     glGenerateMipmap(GL_TEXTURE_3D);
 
     //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones, GL_REPEAT
@@ -246,11 +260,16 @@ void Scene::gpu_setup()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glActiveTexture(GL_TEXTURE0 + 0); // Texture unit 0
-    glBindTexture(GL_TEXTURE_3D, texture);
+    glActiveTexture(GL_TEXTURE0 + 3); // What texture unit?
+
+    //THIS IS HOW IT WAS DONE
+    // glBindTexture(GL_TEXTURE_3D, texture);
+
+    //THIS IS NEW
+    glBindImageTexture(3, texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA8);
 
     //I like referring to uniforms this way, rather than keeping a number in the class
-    glUniform1i( glGetUniformLocation(shader, "tex"), 0);  //texture is in texture unit 0
+    glUniform1i( glGetUniformLocation(shader, "tex"), 3);  //texture is in texture unit 0
   }
   else
   {
