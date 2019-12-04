@@ -135,9 +135,9 @@ vec4 get_color_for_pixel()
 
   int sx, sy, sz;
 
-  sx = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
+  sz = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
   sy = int(imageSize(tex).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
-  sz = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
+  sx = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
 
   ivec3 samp = ivec3(sx, sy, sz);
   old_read = new_read = imageLoad(tex,samp);  //this is with the image

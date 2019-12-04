@@ -15,12 +15,12 @@
 // #define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
 // #define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
 // #define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
-// #define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
+#define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
 // #define TEX_PATH "resources/textures/models/save-copy19.png"       //red and blue castle ao visualization
-#define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
+// #define TEX_PATH "resources/textures/models/save-copy21.png"       //first instance of my stupid ao bug
 // #define TEX_PATH "resources/textures/models/save-copy22.png"       //second instance of the ao bug
 // #define TEX_PATH "resources/textures/models/save-copy24.png"       //underwater grid
 // #define TEX_PATH "resources/textures/models/save-copy25.png"       //water grid with rose
@@ -238,8 +238,6 @@ void Scene::gpu_setup()
     //THIS IS FOR THE NEW ONE
     // glTexStorage3D(GL_TEXTURE_3D, 1, GL_RGBA8, 512, 256, 256);
     // glTexSubImage3D(GL_TEXTURE_3D, texture, 0, 0, 0, 0, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
-    //
-
 
 
     glGenerateMipmap(GL_TEXTURE_3D);
@@ -248,7 +246,6 @@ void Scene::gpu_setup()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
-
 
     // This one looks the best - other options are GL_LINEAR, GL_NEAREST, then the mipmap ones
       //mag filter  can be either nearest or linear
