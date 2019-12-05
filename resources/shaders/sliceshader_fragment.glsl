@@ -193,7 +193,7 @@ void main()
   gdir = (rot * vec4(normal,0.0)).xyz;
 
   if(hit(gorg,gdir))
-    fcolor = get_color_for_pixel();  //this assumes tmin, tmax defined
+    fcolor = get_color_for_pixel();  //this assumes tmin, tmax defined by hit(org,dir)
   else
     discard;
 
