@@ -15,7 +15,7 @@
 // #define TEX_PATH "resources/textures/models/save-copy9.png"        //black, white and gold noise
 // #define TEX_PATH "resources/textures/models/save-copy10.png"       // black, gold, white and orange, eroded
 // #define TEX_PATH "resources/textures/models/save-copy13.png"       //castle
-#define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
+// #define TEX_PATH "resources/textures/models/save-copy15.png"       //too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy16.png"       //fewer but still too many trunks
 // #define TEX_PATH "resources/textures/models/save-copy17.png"       //forest looking better
 // #define TEX_PATH "resources/textures/models/save-copy18.png"       //forest with flowers
@@ -86,6 +86,8 @@
 // #define TEX_PATH "resources/textures/models/space4.png"             //space
 // #define TEX_PATH "resources/textures/models/space5.png"             //space
 // #define TEX_PATH "resources/textures/models/space6.png"             //space
+// #define TEX_PATH "resources/textures/models/space7.png"             //space
+#define TEX_PATH "resources/textures/models/space8.png"             //space
 
 
 
@@ -212,6 +214,9 @@ void Scene::gpu_setup()
   Shader s("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl");
   shader = s.Program;
 
+  Shader s2("resources/shaders/fake_compute_vertex.glsl", "resources/shaders/fake_compute_fragment.glsl");
+  fake_compute_shader = s2.Program;
+
   glUseProgram(shader);
 
 
@@ -263,7 +268,7 @@ void Scene::gpu_setup()
     // glBindTexture(GL_TEXTURE_3D, texture);
 
     //THIS IS NEW
-    glBindImageTexture(3, texture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA8);
+    glBindImageTexture(3, texture, 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
 
     //I like referring to uniforms this way, rather than keeping a number in the class
     glUniform1i( glGetUniformLocation(shader, "tex"), 3);  //texture is in texture unit 0
