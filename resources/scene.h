@@ -88,7 +88,13 @@
 // #define TEX_PATH "resources/textures/models/space6.png"             //space
 // #define TEX_PATH "resources/textures/models/space7.png"             //space
 // #define TEX_PATH "resources/textures/models/space8.png"             //space
-#define TEX_PATH "resources/textures/models/space9.png"             //space
+// #define TEX_PATH "resources/textures/models/space9.png"             //space
+
+
+
+
+#define TEX_PATH "resources/textures/models/wireworld0.png"             //automataz
+
 
 
 
@@ -256,6 +262,11 @@ void Scene::gpu_setup()
     cout << endl << "texture loaded" << endl;
     cout << "  the size of the 3d texture image is " << image_data.size() << " bytes (x2)";
 
+    for(auto x : image_data)
+    {
+      // cout << int(x) << " " ;
+    }
+
 
     glBindTexture(GL_TEXTURE_3D, texture[0]); // use the specified ID
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
@@ -386,6 +397,11 @@ void Scene::compute()
     glUniform1i( glGetUniformLocation(shader[1], "current"), 1);  //current is in texture unit 1
 
   }
+
+  glUseProgram(shader[1]);
+
+
+  glDrawArrays(GL_POINTS, 0, 256*256*512);
 
 
 }
