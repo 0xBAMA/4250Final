@@ -78,7 +78,7 @@
 // #define TEX_PATH "resources/textures/models/graph27.png"             //graphs
 
 
-//space extension of the graph project 12/2
+//space extension of the graph project 12/2 - enumerates all connections between a set of nodes, plus some detritus
 // #define TEX_PATH "resources/textures/models/space0.png"             //space - low visibility
 // #define TEX_PATH "resources/textures/models/space1.png"             //space
 // #define TEX_PATH "resources/textures/models/space2.png"             //space
@@ -87,7 +87,8 @@
 // #define TEX_PATH "resources/textures/models/space5.png"             //space
 // #define TEX_PATH "resources/textures/models/space6.png"             //space
 // #define TEX_PATH "resources/textures/models/space7.png"             //space
-#define TEX_PATH "resources/textures/models/space8.png"             //space
+// #define TEX_PATH "resources/textures/models/space8.png"             //space
+#define TEX_PATH "resources/textures/models/space9.png"             //space
 
 
 
@@ -135,7 +136,13 @@ public:
   void init();
   void draw();
 
-  GLuint get_shader() {return shader;}
+  void compute();
+
+  void set_frame_count(long int in) {frame_count = in;}
+
+  GLuint get_draw_shader() {return shader[0];}
+  GLuint get_comp_shader() {return shader[1];}
+
 
 private:
 
@@ -144,12 +151,14 @@ private:
   std::vector<glm::vec4>    colors;
   std::vector<glm::vec3> texcoords;
 
+  long int frame_count;
+
   sliceobj s;
 
   GLuint vao;
   GLuint buffer;
-  GLuint texture;
-  GLuint shader;
+  GLuint texture[2];
+  GLuint shader[2];
 
   //attribs
   GLuint points_attrib;
@@ -211,18 +220,17 @@ void Scene::gpu_setup()
 
   //COMPILE AND USE SHADERS
 
-  Shader s("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl");
-  shader = s.Program;
+  //normal
+  shader[0] = Shader("resources/shaders/sliceshader_vertex.glsl", "resources/shaders/sliceshader_fragment.glsl").Program;
 
-  Shader s2("resources/shaders/fake_compute_vertex.glsl", "resources/shaders/fake_compute_fragment.glsl");
-  fake_compute_shader = s2.Program;
+  //pseudo-compute
+  shader[1] = Shader("resources/shaders/fake_compute_vertex.glsl", "resources/shaders/fake_compute_fragment.glsl").Program;
 
-  glUseProgram(shader);
+  glUseProgram(shader[0]);
 
 
   //TEXTURES
-  glGenTextures(1, &texture); // Generate an ID
-  glBindTexture(GL_TEXTURE_3D, texture); // use the specified ID
+  glGenTextures(2, &texture[0]); // Generate two IDs
 
 
   unsigned width, height;
@@ -234,44 +242,38 @@ void Scene::gpu_setup()
   if( error == 0 )
   {
     cout << endl << "texture loaded" << endl;
-    cout << "  the size of the 3d texture image is " << image_data.size() << " bytes";
+    cout << "  the size of the 3d texture image is " << image_data.size() << " bytes (x2)";
 
 
-    //THIS IS WHAT I HAD BEFORE - apparently, it allocates storage in the background
+    glBindTexture(GL_TEXTURE_3D, texture[0]); // use the specified ID
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
-
-    //THIS IS FOR THE NEW ONE
-    // glTexStorage3D(GL_TEXTURE_3D, 1, GL_RGBA8, 512, 256, 256);
-    // glTexSubImage3D(GL_TEXTURE_3D, texture, 0, 0, 0, 0, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
-
-
     glGenerateMipmap(GL_TEXTURE_3D);
-
-    //GL_MIRRORED_REPEAT is another interesting method, also the clamping ones, GL_REPEAT
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
-
-    // This one looks the best - other options are GL_LINEAR, GL_NEAREST, then the mipmap ones
-      //mag filter  can be either nearest or linear
-      //min filter can be use the mipmap ones
-
-    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glActiveTexture(GL_TEXTURE0 + 0); // What texture unit?
+    glBindImageTexture(0, texture[0], 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
+    glUniform1i( glGetUniformLocation(shader[0], "current"), 0);  //texture is in texture unit 0
+    glUniform1i( glGetUniformLocation(shader[1], "current"), 0);  //texture is in texture unit 0
 
-    glActiveTexture(GL_TEXTURE0 + 3); // What texture unit?
 
-    //THIS IS HOW IT WAS DONE
-    // glBindTexture(GL_TEXTURE_3D, texture);
 
-    //THIS IS NEW
-    glBindImageTexture(3, texture, 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
 
-    //I like referring to uniforms this way, rather than keeping a number in the class
-    glUniform1i( glGetUniformLocation(shader, "tex"), 3);  //texture is in texture unit 0
+
+    glBindTexture(GL_TEXTURE_3D, texture[1]); // use the specified ID
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]); // start with reundant data, irrelevant data
+    glGenerateMipmap(GL_TEXTURE_3D);
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBindImageTexture(1, texture[1], 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
+    glUniform1i( glGetUniformLocation(shader[0], "next"), 1);  //texture is in texture unit 1
+    glUniform1i( glGetUniformLocation(shader[1], "next"), 1);  //texture is in texture unit 1
+
   }
   else
   {
@@ -306,22 +308,22 @@ void Scene::gpu_setup()
   cout << endl << endl << "if any of these attribs are giving errors, it's because they were optimized out of the shader (not everything is implemented yet)" << endl << endl;
 
   cout << endl << endl << "setting up points attrib" << endl << std::flush;
-  points_attrib     = glGetAttribLocation(shader, "vPosition");
+  points_attrib     = glGetAttribLocation(shader[0], "vPosition");
   glEnableVertexAttribArray(points_attrib);
   glVertexAttribPointer(points_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (0)));
 
   cout << endl << endl << "setting up texcoords attrib" << endl << std::flush;
-  texcoords_attrib  = glGetAttribLocation(shader, "vTexCoord");
+  texcoords_attrib  = glGetAttribLocation(shader[0], "vTexCoord");
   glEnableVertexAttribArray(texcoords_attrib);
   glVertexAttribPointer(texcoords_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points)));
 
   cout << endl << endl << "setting up normals attrib" << endl << std::flush;
-  normals_attrib    = glGetAttribLocation(shader, "vNormal");
+  normals_attrib    = glGetAttribLocation(shader[0], "vNormal");
   glEnableVertexAttribArray(normals_attrib);
   glVertexAttribPointer(normals_attrib, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords)));
 
   cout << endl << endl << "setting up colors attrib" << endl << std::flush;
-  colors_attrib     = glGetAttribLocation(shader, "vColor");
+  colors_attrib     = glGetAttribLocation(shader[0], "vColor");
   glEnableVertexAttribArray(colors_attrib);
   glVertexAttribPointer(colors_attrib, 4, GL_FLOAT, GL_FALSE, 0, (GLvoid*) (static_cast<const char*>(0) + (num_bytes_points + num_bytes_texcoords + num_bytes_normals)));
 
@@ -330,17 +332,53 @@ void Scene::gpu_setup()
   //projection
   glm::mat4 proj = JonDefault::proj;
 
-  glUniformMatrix4fv(glGetUniformLocation(shader, "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+  glUniformMatrix4fv(glGetUniformLocation(shader[0], "proj"), 1, GL_FALSE, glm::value_ptr(proj));
 
   //view
   glm::mat4 view = JonDefault::view;
 
-  glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+  glUniformMatrix4fv(glGetUniformLocation(shader[0], "view"), 1, GL_FALSE, glm::value_ptr(view));
 
   float scale = 1.0f;
 
-  glUniform1fv(glGetUniformLocation(shader, "scale"), 1, &scale);
+  glUniform1fv(glGetUniformLocation(shader[0], "scale"), 1, &scale);
 
 }
+
+//----------------------------------------------------------------------------
+
+
+void Scene::compute()
+{
+
+  //first thing's first, swap the buffers being used so that we will be displaying the last computed next frame
+    //and we will be writing to the opposite one
+
+  if(frame_count%2)
+  {
+    //the textures don't move, only the references to them
+    glUniform1i( glGetUniformLocation(shader[0], "next"), 1);  //next texture is in texture unit 1
+    glUniform1i( glGetUniformLocation(shader[1], "next"), 1);  //next texture is in texture unit 1
+
+    glUniform1i( glGetUniformLocation(shader[0], "current"), 0);  //current texture is in texture unit 0
+    glUniform1i( glGetUniformLocation(shader[1], "current"), 0);  //current texture is in texture unit 0
+
+  }
+  else
+  {
+
+    glUniform1i( glGetUniformLocation(shader[0], "next"), 0);  //next is in texture unit 0
+    glUniform1i( glGetUniformLocation(shader[1], "next"), 0);  //next is in texture unit 0
+
+    glUniform1i( glGetUniformLocation(shader[0], "current"), 1);  //current is in texture unit 1
+    glUniform1i( glGetUniformLocation(shader[1], "current"), 1);  //current is in texture unit 1
+
+  }
+
+
+}
+
+
+
 
 //----------------------------------------------------------------------------

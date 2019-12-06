@@ -8,7 +8,8 @@ in vec3 texcoord;
 out vec4 fcolor;
 
 // uniform sampler3D tex;
-uniform layout(rgba8) image3D tex;
+uniform layout(rgba8) image3D current;  // this shader always reads from current
+uniform layout(rgba8) image3D next;
 uniform float scale;
 
 
@@ -129,18 +130,18 @@ vec4 get_color_for_pixel()
 
   vec4 new_read, old_read;
 
-  // old_read = new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
+  // old_read = new_read = texture(current,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
 
   //----------------------------------------------------------------------------
 
   int sx, sy, sz;
 
-  sz = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
-  sy = int(imageSize(tex).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
-  sx = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
+  sz = int(imageSize(current).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
+  sy = int(imageSize(current).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
+  sx = int(imageSize(current).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
 
   ivec3 samp = ivec3(sx, sy, sz);
-  old_read = new_read = imageLoad(tex,samp);  //this is with the image
+  old_read = new_read = imageLoad(current,samp);  //this is with the image
 
   //----------------------------------------------------------------------------
 
@@ -153,16 +154,16 @@ vec4 get_color_for_pixel()
       old_read = new_read;
 
 
-      // new_read = texture(tex,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
+      // new_read = texture(current,texture_scale*(gorg+current_t*gdir+texture_offset)); //this is with the sampler
 
       //----------------------------------------------------------------------------
 
-      sx = int(imageSize(tex).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
-      sy = int(imageSize(tex).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
-      sz = int(imageSize(tex).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
+      sx = int(imageSize(current).x * (texture_scale*(gorg+current_t*gdir+texture_offset)).x);
+      sy = int(imageSize(current).y * (texture_scale*(gorg+current_t*gdir+texture_offset)).y);
+      sz = int(imageSize(current).z * (texture_scale*(gorg+current_t*gdir+texture_offset)).z);
 
       samp = ivec3(sx, sy, sz);
-      new_read = imageLoad(tex,samp); //this is with the image
+      new_read = imageLoad(current,samp); //this is with the image
 
       //----------------------------------------------------------------------------
 

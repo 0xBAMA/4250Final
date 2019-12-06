@@ -42,6 +42,8 @@ MessageCallback( GLenum source,
 //the geometry
 Scene scene;
 
+int frame_count = 0;
+
 //other globals (glow_balls)
 float t = 0.0;
 float tilt = 0.0;
@@ -61,11 +63,35 @@ glm::vec3 texture_offset = glm::vec3(0,0,0);
 
 void display()
 {
+  frame_count++;
+  scene.set_frame_count(frame_count);
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
   //do fake compute
+
+    // this does a few things -
+/*
+
+  - first, change the bindings around
+
+    do the computation, getting values for next, based on the state of current
+    set a memory barrier so that image access can't happen
+    change the value of current to that of next,
+    change the value of
+
+*/
+
+
+
   scene.compute();
+
+
+
+
+  glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);  // THIS SHOULD ENSURE COHERENCY
+
 
   // display functions
   scene.draw();
@@ -91,13 +117,13 @@ void keyboard(unsigned char key, int x, int y)
 
     case '=':   //+
       scale *= 0.9;
-      glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
+      glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "scale"), 1, &scale);
       cout << scale << endl;
       break;
 
     case '-':   //-
       scale /= 0.9;
-      glUniform1fv(glGetUniformLocation(scene.get_shader(), "scale"), 1, &scale);
+      glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "scale"), 1, &scale);
       cout << scale << endl;
       break;
 
@@ -139,12 +165,12 @@ void keyboard(unsigned char key, int x, int y)
 
     case 'c':
       texture_scale*=0.9;
-      glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
+      glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "uniform_scale"), 1, &texture_scale);
       break;
 
     case 'v':
       texture_scale/=0.9;
-      glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
+      glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "uniform_scale"), 1, &texture_scale);
       break;
 
 
@@ -257,7 +283,7 @@ void timer(int)
 {
 
   t+=0.0001;
-  glUniform1fv(glGetUniformLocation(scene.get_shader(), "t"), 1, &t);
+  glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "t"), 1, &t);
 
 
   location = glm::vec3(0.5,0.5,0.5) + glm::vec3(5*cos(t), yoffset, 5*sin(t));
@@ -266,10 +292,10 @@ void timer(int)
 
 
 
-  glUniform3fv(glGetUniformLocation(scene.get_shader(), "location"), 1, glm::value_ptr(location));
-  glUniform2fv(glGetUniformLocation(scene.get_shader(), "rotation"), 1, glm::value_ptr(rotation));
-  glUniform3fv(glGetUniformLocation(scene.get_shader(), "texture_offset"), 1, glm::value_ptr(texture_offset));
-  glUniform1fv(glGetUniformLocation(scene.get_shader(), "uniform_scale"), 1, &texture_scale);
+  glUniform3fv(glGetUniformLocation(scene.get_draw_shader(), "location"), 1, glm::value_ptr(location));
+  glUniform2fv(glGetUniformLocation(scene.get_draw_shader(), "rotation"), 1, glm::value_ptr(rotation));
+  glUniform3fv(glGetUniformLocation(scene.get_draw_shader(), "texture_offset"), 1, glm::value_ptr(texture_offset));
+  glUniform1fv(glGetUniformLocation(scene.get_draw_shader(), "uniform_scale"), 1, &texture_scale);
 
 
 	glutPostRedisplay();
