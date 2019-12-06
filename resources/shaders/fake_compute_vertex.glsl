@@ -33,6 +33,8 @@ void main()
 
 	ivec4 current_data = ivec4(imageLoad(current,sample_location)*vec4(256));
 
+	
+
 	//we consider everything but the corners
 	if(compare(current_data, conductor))
 	{

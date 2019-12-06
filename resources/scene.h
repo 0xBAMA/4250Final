@@ -239,6 +239,18 @@ void Scene::gpu_setup()
   unsigned error = lodepng::decode( image_data, width, height, TEX_PATH, LodePNGColorType::LCT_RGBA, 8 );
 
 
+
+
+
+  // GL_MAX_VERTEX_IMAGE_UNIFORMS
+
+  int num;
+  glGetIntegerv(GL_MAX_VERTEX_IMAGE_UNIFORMS, &num);
+
+  cout << " GL_MAX_VERTEX_IMAGE_UNIFORMS returned " << num << endl << endl;
+
+
+
   if( error == 0 )
   {
     cout << endl << "texture loaded" << endl;
@@ -248,7 +260,7 @@ void Scene::gpu_setup()
     glBindTexture(GL_TEXTURE_3D, texture[0]); // use the specified ID
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]);
     glGenerateMipmap(GL_TEXTURE_3D);
-    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now (for images)
     // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -265,7 +277,7 @@ void Scene::gpu_setup()
     glBindTexture(GL_TEXTURE_3D, texture[1]); // use the specified ID
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, 512, 256, 256, 0,  GL_RGBA, GL_UNSIGNED_BYTE, &image_data[0]); // start with reundant data, irrelevant data
     glGenerateMipmap(GL_TEXTURE_3D);
-    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now
+    // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT); //these are broken now (for images)
     // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     // glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
