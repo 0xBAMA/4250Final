@@ -250,10 +250,10 @@ void Scene::gpu_setup()
 
   // GL_MAX_VERTEX_IMAGE_UNIFORMS
 
-  int num;
-  glGetIntegerv(GL_MAX_VERTEX_IMAGE_UNIFORMS, &num);
+  // int num;
+  // glGetIntegerv(GL_MAX_VERTEX_IMAGE_UNIFORMS, &num);
 
-  cout << " GL_MAX_VERTEX_IMAGE_UNIFORMS returned " << num << endl << endl;
+  // cout << " GL_MAX_VERTEX_IMAGE_UNIFORMS returned " << num << endl << endl;
 
 
 
@@ -262,10 +262,10 @@ void Scene::gpu_setup()
     cout << endl << "texture loaded" << endl;
     cout << "  the size of the 3d texture image is " << image_data.size() << " bytes (x2)";
 
-    for(auto x : image_data)
-    {
-      // cout << int(x) << " " ;
-    }
+    // for(auto x : image_data)
+    // {
+    //   // cout << int(x) << " " ;
+    // }
 
 
     glBindTexture(GL_TEXTURE_3D, texture[0]); // use the specified ID
@@ -278,7 +278,9 @@ void Scene::gpu_setup()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glActiveTexture(GL_TEXTURE0 + 0); // What texture unit?
     glBindImageTexture(0, texture[0], 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "current"), 0);  //texture is in texture unit 0
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "current"), 0);  //texture is in texture unit 0
 
 
@@ -294,7 +296,9 @@ void Scene::gpu_setup()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBindImageTexture(1, texture[1], 0, GL_TRUE, 0, GL_READ_WRITE, GL_RGBA8);
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "next"), 1);  //texture is in texture unit 1
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "next"), 1);  //texture is in texture unit 1
 
   }
@@ -303,6 +307,8 @@ void Scene::gpu_setup()
     std::cout << "Failed to load texture" << std::endl;
     if(error) std::cout << "error " << error << ": " << lodepng_error_text(error) << std::endl;
   }
+
+  glUseProgram(shader[0]);
 
   glGenVertexArrays( 1, &vao );
   glBindVertexArray( vao );
@@ -353,14 +359,22 @@ void Scene::gpu_setup()
 
 
   //projection
+  cout << endl << endl << "sending projection matrix" << endl << std::flush;
+
   glm::mat4 proj = JonDefault::proj;
 
   glUniformMatrix4fv(glGetUniformLocation(shader[0], "proj"), 1, GL_FALSE, glm::value_ptr(proj));
 
+
   //view
+  cout << endl << endl << "sending view matrix" << endl << std::flush;
+
   glm::mat4 view = JonDefault::view;
 
   glUniformMatrix4fv(glGetUniformLocation(shader[0], "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+
+  cout << endl << endl << "sending scale" << endl << std::flush;
 
   float scale = 1.0f;
 
@@ -377,33 +391,39 @@ void Scene::compute()
   //first thing's first, swap the buffers being used so that we will be displaying the last computed next frame
     //and we will be writing to the opposite one
 
-  if(frame_count%2)
+  if(frame_count % 2 == 0)
   {
+
     //the textures don't move, only the references to them
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "next"), 1);  //next texture is in texture unit 1
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "next"), 1);  //next texture is in texture unit 1
 
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "current"), 0);  //current texture is in texture unit 0
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "current"), 0);  //current texture is in texture unit 0
 
   }
   else
   {
 
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "next"), 0);  //next is in texture unit 0
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "next"), 0);  //next is in texture unit 0
 
+    glUseProgram(shader[0]);
     glUniform1i( glGetUniformLocation(shader[0], "current"), 1);  //current is in texture unit 1
+    glUseProgram(shader[1]);
     glUniform1i( glGetUniformLocation(shader[1], "current"), 1);  //current is in texture unit 1
 
   }
 
-  glUseProgram(shader[1]);
-
-
   glDrawArrays(GL_POINTS, 0, 256*256*512);
 
-
+  glUseProgram(shader[0]);
 }
 
 

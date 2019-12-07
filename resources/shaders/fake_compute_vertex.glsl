@@ -11,7 +11,7 @@ void main()
 	int my_index = gl_VertexID;
 
 	// integer division/mod to get index
-	ivec3 sample_location = ivec3(my_index%512, (my_index/512)%512, my_index/(256*512));
+	ivec3 sample_location = ivec3(my_index%512, (my_index/512)%256, my_index/(256*512));
 
 
 // == conductor
@@ -21,17 +21,17 @@ void main()
 
 
 	//we consider everything but the corners
-	if(current_data.r <10 && current_data.g <10 && current_data.b <10)		//yellow is electron head
+	if(current_data.r <10 && current_data.g <10 && current_data.b <10 && current_data.a > 200)
 	{
 		//do I have electron neighbors? TBD
 		imageStore(next, sample_location, ivec4(255,0,0,255));	//goes to a red test color
 
 	}
-	else if(current_data.b >200 && current_data.g >200) //	cyan is electron tail
+	else if(current_data.b >200 && current_data.g >200 && current_data.a > 200) //	cyan is electron tail
 	{
 		imageStore(next,sample_location, ivec4(0,0,0,255));	//goes back to conductor
 	}
-	else if(current_data.r >200 && current_data.g >200)		//yellow is electron head
+	else if(current_data.r >200 && current_data.g >200 && current_data.a > 200)		//yellow is electron head
 	{
 		imageStore(next,sample_location, ivec4(0,255,255,255));	//goes to electron tail cyan
 	}
