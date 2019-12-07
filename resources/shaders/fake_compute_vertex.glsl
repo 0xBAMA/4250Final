@@ -31,12 +31,19 @@ void main()
 
 // == conductor
 
-	ivec4 current_data = ivec4(imageLoad(current,sample_location)*vec4(256));
+	ivec4 data[19];
+
+	//the location of voxel being considered
+	data[0] = ivec4(imageLoad(current,sample_location)*vec4(256));
 
 	
 
+
+
+
+
 	//we consider everything but the corners
-	if(compare(current_data, conductor))
+	if(compare(data[0], conductor))
 	{
 		//do I have electron neighbors?
 		imageStore(next,sample_location, test_red);
@@ -44,13 +51,13 @@ void main()
 	}
 
 
-	if(compare(current_data, electron_tail))
+	if(compare(data[0], electron_tail))
 	{
 		imageStore(next,sample_location, conductor);
 	}
 
 
-	if(compare(current_data, electron_head))
+	if(compare(data[0], electron_head))
 	{
 		imageStore(next,sample_location, electron_tail);
 	}

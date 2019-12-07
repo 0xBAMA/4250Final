@@ -247,7 +247,17 @@ void Scene::gpu_setup()
   int num;
   glGetIntegerv(GL_MAX_VERTEX_IMAGE_UNIFORMS, &num);
 
-  cout << " GL_MAX_VERTEX_IMAGE_UNIFORMS returned " << num << endl << endl;
+  cout << " GL_MAX_VERTEX_IMAGE_UNIFORMS returned " << num << endl;
+
+  glGetIntegerv(GL_MAX_COMPUTE_IMAGE_UNIFORMS, &num);
+
+  cout << " GL_MAX_COMPUTE_IMAGE_UNIFORMS returned " << num << endl;
+
+  glGetIntegerv(GL_MAX_FRAGMENT_IMAGE_UNIFORMS, &num);
+
+  cout << " GL_MAX_FRAGMENT_IMAGE_UNIFORMS returned " << num << endl << endl;
+
+
 
 
 
