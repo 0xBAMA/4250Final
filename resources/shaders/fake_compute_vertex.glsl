@@ -1,22 +1,7 @@
 #version 450 core
 
-//we define our relevant states as colors
-
-#define conductor	ivec4(32, 32, 32, 255)
-#define electron_tail ivec4(0, 32, 45, 255)
-#define electron_head ivec4(45, 32, 0, 255)
-
-//and this for testing (high contrast)
-#define test_red ivec4(255, 32, 0, 255)
-
-
 uniform layout(rgba8) image3D current;
 uniform layout(rgba8) image3D next;
-
-bool compare(ivec4 a, ivec4 b)
-{
-	return (a.x == b.x && a.y == b.y && a.z == b.z && a.a == b.a);
-}
 
 void main()
 {
@@ -26,7 +11,7 @@ void main()
 	int my_index = gl_VertexID;
 
 	// integer division/mod to get index
-	ivec3 sample_location = ivec3(my_index%512, (my_index/512)%512, my_index/(256*512));
+	ivec3 sample_location = ivec3(my_index%512, (my_index/512)%256, my_index/(256*512));
 
 
 // == conductor
@@ -36,30 +21,25 @@ void main()
 	//the location of voxel being considered
 	data[0] = ivec4(imageLoad(current,sample_location)*vec4(256));
 
-	
 
 
 
 
 
 	//we consider everything but the corners
-	if(compare(data[0], conductor))
+	if(current_data.r <10 && current_data.g <10 && current_data.b <10 && current_data.a > 200)
 	{
-		//do I have electron neighbors?
-		imageStore(next,sample_location, test_red);
+		//do I have electron neighbors? TBD
+		imageStore(next, sample_location, ivec4(255,0,0,255));	//goes to a red test color
 
 	}
-
-
-	if(compare(data[0], electron_tail))
+	else if(current_data.b >200 && current_data.g >200 && current_data.a > 200) //	cyan is electron tail
 	{
-		imageStore(next,sample_location, conductor);
+		imageStore(next,sample_location, ivec4(0,0,0,255));	//goes back to conductor
 	}
-
-
-	if(compare(data[0], electron_head))
+	else if(current_data.r >200 && current_data.g >200 && current_data.a > 200)		//yellow is electron head
 	{
-		imageStore(next,sample_location, electron_tail);
+		imageStore(next,sample_location, ivec4(0,255,255,255));	//goes to electron tail cyan
 	}
 
 
