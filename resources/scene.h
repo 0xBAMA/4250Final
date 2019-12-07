@@ -390,6 +390,7 @@ void Scene::compute()
 
   //first thing's first, swap the buffers being used so that we will be displaying the last computed next frame
     //and we will be writing to the opposite one
+  frame_count++;
 
   if(frame_count % 2 == 0)
   {

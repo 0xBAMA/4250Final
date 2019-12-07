@@ -59,7 +59,7 @@ void main()
 		//do I have 1 or 2 electron neighbors?
 		for(int i = 1; i < 19; i++)
 		{
-			if(data[i].r >250 && data[i].g >250 && data[i].a > 250)
+			if(data[i].r >250 && data[i].g >250 && data[i].b <10 && data[i].a > 250)
 			{
 				e_count++;
 			}
@@ -73,12 +73,12 @@ void main()
 
 
 	}
-	else if(data[0].b >250 && data[0].g >250 && data[0].a > 250) //	cyan is electron tail
-	{
-		imageStore(next,sample_location, ivec4(0,0,0,255));	//goes back to conductor
-	}
-	else if(data[0].r >250 && data[0].g >250 && data[0].a > 250)		//yellow is electron head
+	else if(data[0].r >250 && data[0].g >250 && data[0].b <10 && data[0].a > 250)		//yellow is electron head
 	{
 		imageStore(next,sample_location, ivec4(0,255,255,255));	//goes to electron tail cyan
+	}
+	else if(data[0].r <10 && data[0].b >250 && data[0].g >250 && data[0].a > 250) //	cyan is electron tail
+	{
+		imageStore(next,sample_location, ivec4(0,0,0,255));	//goes back to conductor
 	}
 }

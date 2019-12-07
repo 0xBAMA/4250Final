@@ -63,8 +63,8 @@ glm::vec3 texture_offset = glm::vec3(0,0,0);
 
 void display()
 {
-  frame_count++;
-  scene.set_frame_count(frame_count);
+  // frame_count++;
+  // scene.set_frame_count(frame_count);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -85,12 +85,6 @@ void display()
 
 
 
-  scene.compute();
-
-
-
-
-  glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);  // THIS SHOULD ENSURE COHERENCY
 
 
   // display functions
@@ -131,6 +125,13 @@ void keyboard(unsigned char key, int x, int y)
 
     case 'f':
       glutFullScreenToggle(); //specific to freeglut
+      break;
+
+
+
+    case 'g':
+      scene.compute();
+      glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);  // THIS SHOULD ENSURE COHERENCY
       break;
 
 
