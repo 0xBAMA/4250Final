@@ -94,7 +94,8 @@
 
 
 // #define TEX_PATH "resources/textures/models/wireworld0.png"             //automata
-#define TEX_PATH "resources/textures/models/wireworld1.png"             //automata
+// #define TEX_PATH "resources/textures/models/wireworld1.png"             //automata
+#define TEX_PATH "resources/textures/models/wireworld3.png"             //automata
 
 
 
