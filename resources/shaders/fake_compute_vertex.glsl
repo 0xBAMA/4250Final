@@ -3,6 +3,28 @@
 uniform layout(rgba8) image3D current;
 uniform layout(rgba8) image3D next;
 
+//electron head is yellow
+bool is_electron_head(ivec4 i)
+{
+	return i.r > 253 && i.g > 253 && i.b < 2 && i.a > 253;
+}
+
+//electron tail is cyan
+bool is_electron_tail(ivec4 i)
+{
+	return i.r < 2 && i.g > 253 && i.b > 253 && i.a > 253;
+}
+
+//conductor is black
+bool is_conductor(ivec4 i)
+{
+	return i.r < 2 && i.g < 2 && i.b < 2 && i.a > 253;
+}
+
+
+
+
+
 void main()
 {
 
@@ -35,7 +57,7 @@ void main()
 
 
 	//we consider everything but the corners
-	if(data[0].r <10 && data[0].g <10 && data[0].b <10 && data[0].a > 250)
+	if(is_conductor(data[0]))
 	{
 		data[ 1] = ivec4(imageLoad(current,sample_location+ivec3(p,0,0))*vec4(256));   // +x  0  0
 		data[ 2] = ivec4(imageLoad(current,sample_location+ivec3(n,0,0))*vec4(256));   // -x  0  0
@@ -57,9 +79,12 @@ void main()
 		data[18] = ivec4(imageLoad(current,sample_location+ivec3(0,n,n))*vec4(256));   // 0 -y  -z
 
 		//do I have 1 or 2 electron neighbors?
+
+		e_count = 0;
+
 		for(int i = 1; i < 19; i++)
 		{
-			if(data[i].r >250 && data[i].g >250 && data[i].b <10 && data[i].a > 250)
+			if(is_electron_head(data[i]))
 			{
 				e_count++;
 			}
@@ -69,16 +94,22 @@ void main()
 		{
 			imageStore(next, sample_location, ivec4(255,255,0,255));	//goes to electron head
 		}
+		else
+		{
+			imageStore(next,sample_location, ivec4(0,0,0,255));		//conductor to conductor
+		}
 
 
 
 	}
-	else if(data[0].r >250 && data[0].g >250 && data[0].b <10 && data[0].a > 250)		//yellow is electron head
+	else if(is_electron_head(data[0])) //goes to electron tail cyan
 	{
-		imageStore(next,sample_location, ivec4(0,255,255,255));	//goes to electron tail cyan
+		imageStore(next,sample_location, ivec4(0,255,255,255));
+		// imageStore(current,sample_location, ivec4(0,255,255,255));
 	}
-	else if(data[0].r <10 && data[0].b >250 && data[0].g >250 && data[0].a > 250) //	cyan is electron tail
+	else if(is_electron_tail(data[0])) //goes back to conductor
 	{
-		imageStore(next,sample_location, ivec4(0,0,0,255));	//goes back to conductor
+		imageStore(next,sample_location, ivec4(0,0,0,255));
+		// imageStore(current,sample_location, ivec4(0,0,0,255));
 	}
 }
