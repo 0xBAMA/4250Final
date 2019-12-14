@@ -89,8 +89,10 @@
 // #define TEX_PATH "resources/textures/models/space7.png"             //space
 // #define TEX_PATH "resources/textures/models/space8.png"             //space
 // #define TEX_PATH "resources/textures/models/space9.png"             //space
-#define TEX_PATH "resources/textures/models/space_t.png"             //space
 
+// #define TEX_PATH "resources/textures/models/space_t.png"         //space - first attempt at trees
+// #define TEX_PATH "resources/textures/models/space_t2.png"    //space - trees
+#define TEX_PATH "resources/textures/models/space_t3.png"         //space - the second attempt - showing stages
 
 
 
