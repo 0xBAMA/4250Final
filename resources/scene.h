@@ -89,6 +89,7 @@
 // #define TEX_PATH "resources/textures/models/space7.png"             //space
 // #define TEX_PATH "resources/textures/models/space8.png"             //space
 // #define TEX_PATH "resources/textures/models/space9.png"             //space
+#define TEX_PATH "resources/textures/models/space_t.png"             //space
 
 
 
@@ -97,7 +98,7 @@
 // #define TEX_PATH "resources/textures/models/wireworld1.png"             //automata
 // #define TEX_PATH "resources/textures/models/wireworld2.png"             //automata
 // #define TEX_PATH "resources/textures/models/wireworld3.png"             //automata
-#define TEX_PATH "resources/textures/models/wireworld4.png"             //automata
+// #define TEX_PATH "resources/textures/models/wireworld4.png"             //automata
 
 
 
